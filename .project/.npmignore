@@ -1,0 +1,8 @@
+.git*
+.npmignore
+*.log
+*.md
+*.tgz
+*.tar.gz
+.DS_Store
+Thumbs.db

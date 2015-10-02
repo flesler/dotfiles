@@ -1,0 +1,11 @@
+[user]
+	name = Ariel Flesler
+	email = aflesler@gmail.com
+[alias]
+  co = checkout
+  ci = commit
+  st = status
+  br = branch
+[core]
+	autocrlf = false
+	quotepath = false

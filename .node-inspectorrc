@@ -1,0 +1,9 @@
+{
+	"web-port": 9090,
+	"web-host": null,
+  "debug-port": 5858,
+	"cli": true,
+	"save-live-edit": true,
+  "preload": true,
+	"debug-brk": true
+}
