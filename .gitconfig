@@ -7,5 +7,14 @@
   st = status
   br = branch
 [core]
+	# Use custom `.gitignore`
+	excludesfile = ~/.gitignore
+
 	autocrlf = false
 	quotepath = false
+[color]
+	# Use colors in Git commands that are capable of colored output when
+	ui = auto
+[push]
+	# Make `git push` push relevant annotated tags when pushing branches out.
+	followTags = true
