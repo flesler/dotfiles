@@ -1,4 +1,4 @@
-alias rc='vi ~/.bashrc && . ~/.bashrc'
+alias rc='vi ~/.bashrc && source ~/.bashrc'
 # Directories
 alias cd..='cd ..'
 alias ..='cd ..'
@@ -41,5 +41,5 @@ alias h=history
 alias lintall="find . -not \( -path './node_modules/*' -prune \) -name \*.js | xargs jshint"
 alias csall="find . -not \( -path './node_modules/*' -prune \) -name \*.js | xargs jscs"
 
-. ~/.bash_profile
-. ~/.inputrc
+source ~/.bash_profile
+source ~/.inputrc # Not really intented like this no?
