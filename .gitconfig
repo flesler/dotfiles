@@ -2,14 +2,17 @@
 	name = Ariel Flesler
 	email = aflesler@gmail.com
 [alias]
-  co = checkout
-  ci = commit
-  st = status
-  br = branch
+	co = checkout
+	ci = commit
+	st = status
+	br = branch
+	d = diff
+	sta = stash
+	rb = rebase
+	rs = reset
 [core]
 	# Use custom `.gitignore`
 	excludesfile = ~/.gitignore
-
 	autocrlf = false
 	quotepath = false
 [color]
@@ -18,3 +21,4 @@
 [push]
 	# Make `git push` push relevant annotated tags when pushing branches out.
 	followTags = true
+	default = matching
