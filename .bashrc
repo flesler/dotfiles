@@ -40,6 +40,7 @@ alias online='ping yahoo.com -t'
 alias h=history
 alias lintall="find . -not \( -path './node_modules/*' -prune \) -name \*.js | xargs jshint"
 alias csall="find . -not \( -path './node_modules/*' -prune \) -name \*.js | xargs jscs"
+alias pathlist='echo "$PATH" | tr ":" "\n"'
 
 source ~/.bash_profile
 source ~/.inputrc # Not really intented like this no?
