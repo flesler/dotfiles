@@ -6,3 +6,6 @@ export HISTCONTROL=ignoreboth
 
 # Set Sublime as Editor
 export EDITOR='subl -w'
+
+# Use less command as a pager
+export PAGER=less
