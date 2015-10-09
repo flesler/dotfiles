@@ -1,7 +1,5 @@
 # dotfiles
 
-My dotfiles, on running MINGW
-
 ## Installation
 
 ### Automatic
