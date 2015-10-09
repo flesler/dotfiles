@@ -2,24 +2,18 @@
 ZIP=master.zip
 URL=https://github.com/flesler/dotfiles/archive/$ZIP
 TMP=dotfiles-master
+EXCLUDE="$TMP/README.md $TMP/bin/bootstrap.sh"
 
 # Ensure clean state
-rm -rf $TMP && mkdir -p $TMP
-
+rm -rf $TMP
 # Download and extract zip
 curl $URL -sLOk
-unzip -q $ZIP -d .
+unzip -q $ZIP -d . -x $EXCLUDE
 rm $ZIP
 
 for file in `ls -A $TMP`; do
-	case $file in
-		README.md) ;;
-		bin/bootstrap.sh) ;;
-		*) 
-			# TODO: Move to ~, make backups
-			echo $TMP/$file
-			;;
-	esac
+	# TODO: Move to ~, make backups
+	echo $TMP/$file
 done
 
 rm -r $TMP
