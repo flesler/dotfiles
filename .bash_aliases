@@ -20,6 +20,7 @@ alias ts='node -e "console.log(new Date(+process.argv[1]).toISOString())" -- '
 alias st='git status'
 alias d='git diff'
 alias p='git push'
+alias pf='p -f'
 alias add='git add --all'
 alias stash='add && git stash'
 alias stashpull='stash && git pull --rebase && git stash pop'
@@ -30,14 +31,9 @@ alias rev='git reset --soft HEAD^'
 
 # Shell
 
-alias rc='vi ~/.bashrc && source ~/.bashrc'
 alias rr='rm -r'
 alias mp='mkdir -p'
 alias pathlist='echo "$PATH" | tr ":" "\n"'
-
-# History
-
-alias h=history
 
 # Utils
 

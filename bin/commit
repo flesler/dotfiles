@@ -6,4 +6,4 @@
 # USAGE:
 #	- commit "my message"
 
-git add --all && git commit -m "$1" && echo "$1" | clip
+git add -A && git commit -m "$1" && echo "$1" | clip

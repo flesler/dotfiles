@@ -1,0 +1,19 @@
+#!/bin/sh
+# Edits one of the dotfiles and then re-sources it
+#
+# USAGE:
+#	- rc # edit .bashrc
+#	- rc aliases # edit .bash_aliases
+#	- rc input # edit .inputrc
+
+NAME=${1:=bash}
+
+for $file in "~/$NAME" "~/.$NAME" "~/.$NAMErc" "~/.bash_$NAME"; do
+	if [ -f "$file" ] ; then
+		vi $file && . $file
+		exit
+	fi
+done
+
+echo "no file found with that name"
+exit 1
