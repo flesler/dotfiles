@@ -15,11 +15,6 @@ alias ni='node-debug --save-live-edit true -p 9090 -c '
 alias r='npm run'
 alias ts='node -e "console.log(new Date(+process.argv[1]).toISOString())" -- '
 
-# AmberAds
-
-alias proddb='PG_DB=db-prod'
-alias pg='DEBUG_PG=1'
-
 # Git
 
 alias st='git status'
