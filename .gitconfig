@@ -1,6 +1,8 @@
 [user]
 	name = Ariel Flesler
 	email = aflesler@gmail.com
+[github]
+  user = flesler
 [alias]
 	co = checkout
 	ci = commit
@@ -15,6 +17,7 @@
 	excludesfile = ~/.gitignore
 	autocrlf = false
 	quotepath = false
+	editor = subl
 [color]
 	# Use colors in Git commands that are capable of colored output when
 	ui = auto

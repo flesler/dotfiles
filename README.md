@@ -2,8 +2,12 @@
 
 My config files, ready to use
 
-## TODO
+## Installation
 
-- Move aliases to ~/.bash_aliases
-- Maybe move complex aliases/functions to ~/bin as scripts
-- Use .bash_profile and .inputrc correctly
+### Automatic (incomplete)
+
+	curl -s https://raw.githubusercontent.com/flesler/dotfiles/master/install.sh | sh
+
+### Manual
+
+Download the files you want or the whole [zip](https://github.com/flesler/dotfiles/archive/$ZIP) and copy the files you like to your $HOME.

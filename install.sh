@@ -1,7 +1,7 @@
 #!/bin/sh
 # Downloads all the dotfiles and copies them to ~
 # You can run it with this:
-# curl --silent https://raw.githubusercontent.com/flesler/dotfiles/master/install.sh | sh
+# curl -s https://raw.githubusercontent.com/flesler/dotfiles/master/install.sh | sh
 
 ZIP=master.zip
 URL=https://github.com/flesler/dotfiles/archive/$ZIP
