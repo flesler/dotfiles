@@ -1,0 +1,8 @@
+# Add `~/bin` to the `$PATH`
+export PATH="$HOME/bin:$PATH"
+
+# Omit duplicates and commands that begin with a space from history.
+export HISTCONTROL=ignoreboth
+
+# Set Sublime as Editor
+export EDITOR='subl -w'

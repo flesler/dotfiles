@@ -22,3 +22,13 @@
 	# Make `git push` push relevant annotated tags when pushing branches out.
 	followTags = true
 	default = matching
+[pull]
+	rebase = true
+[diff]
+	# Detect copies as well as renames
+	renames = copies
+[rerere]
+	enabled = 1
+[help]
+	# Automatically correct and execute mistyped commands
+	autocorrect = 1

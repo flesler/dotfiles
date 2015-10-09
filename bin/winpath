@@ -1,0 +1,16 @@
+#!/bin/sh
+# Converts a Unix path to absolute Windows form
+# Can take more than once parameter
+# Will output each one in a new line
+#
+# USAGE:
+#	- winpath ~ /usr/bin file.json
+
+for path; do
+	if [ -d "$path" ]; then
+		path=`cd "$path" && pwd -W`
+	else
+		path="$(pwd -W)/$path"
+	fi
+	echo "$path" | sed 's|/|\\|g'
+done

@@ -1,3 +1,3 @@
-# export PATH="$PATH:XYZ:ABC"
+# export PATH="ABC:$PATH"
 
 [ -f ~/.bashrc ] && . ~/.bashrc
