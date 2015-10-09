@@ -17,17 +17,19 @@ alias ts='node -e "console.log(new Date(+process.argv[1]).toISOString())" -- '
 
 # Git
 
-alias st='git status'
+alias s='git status'
 alias d='git diff'
+alias undo='git reset --soft HEAD^'
+alias rev='git reset --hard HEAD^'
+alias add='git add -A'
 alias p='git push'
 alias pf='p -f'
-alias add='git add --all'
 alias stash='add && git stash'
 alias stashpull='stash && git pull --rebase && git stash pop'
 alias stashpush='stash && git push && git stash pop'
 alias rebase='git rebase master'
-alias steprebase='add && git rebase --continue'
-alias rev='git reset --soft HEAD^'
+alias rebasec='add && git rebase --continue'
+alias rebasea='add && git rebase --abort'
 
 # Shell
 

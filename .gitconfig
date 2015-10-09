@@ -4,13 +4,20 @@
 [github]
   user = flesler
 [alias]
-	co = checkout
-	ci = commit
-	st = status
-	br = branch
+	s = status
 	d = diff
-	sta = stash
+	a = add -A
+	undo = reset --soft HEAD^
+	rev = reset --hard HEAD^
+	ci = commit -m
+	p = push
+	pf = push -f
+	st = stash
+	co = checkout
+	br = branch
 	rb = rebase
+	rbc = rebase --continue
+	rba = rebase --abort
 	rs = reset
 [core]
 	# Use custom `.gitignore`
