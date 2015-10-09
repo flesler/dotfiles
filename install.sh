@@ -1,7 +1,9 @@
-#!/bin/sh
+#!/bin/sh -i
 # Downloads all the dotfiles and copies them to ~
 # You can run it with this:
 # curl -s https://raw.githubusercontent.com/flesler/dotfiles/master/install.sh | sh
+
+# FIXME: `read` doesn't work when used non-interactive
 
 ZIP=master.zip
 URL=https://github.com/flesler/dotfiles/archive/$ZIP
@@ -32,16 +34,16 @@ for file in `cd $TMP && find`; do
 	# If conflicted...
 	if [ -f "$dest" ]; then
 		echo -n "$dest exists. (s)kip, (o)verwrite, (b)ackup?"
-		read -sn 1 -p ''
+		read -sn 1 -p ' ' chr
 		echo
-		case $REPLY in
+		case $chr in
 			s) continue;;
 			o) ;;
 			b) 
 				cp "$dest" "$dest$BKP_SUF"
 				echo "backed up $dest to $dest$BKP_SUF";;
 			*)
-				echo "unknown letter $REPLY, skipping"
+				echo "unknown letter '$chr', skipping"
 				continue;;
 		esac
 	fi
