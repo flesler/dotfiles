@@ -32,11 +32,12 @@ function tag() {
   git tag "$1" && git push --tags
 }
 # Shell
-alias rc='vi ~/.bashrc && source ~/.bashrc'
+alias rc='vi ~/.bashrc && . ~/.bashrc'
 alias rr='rm -r'
 alias mp='mkdir -p'
 alias pathlist='echo "$PATH" | tr ":" "\n"'
 # History
+alias h=history
 function rep() {
   # Re-execute the last command that matches a filter (ignore last line, remove IDs)
   cmd=`history | sed '$d' | tr -s ' ' | cut -d' ' -f3- | grep "$1" | tail -n 1`
@@ -47,6 +48,3 @@ function rep() {
 alias online='ping yahoo.com -t'
 alias lintall="find . -not \( -path './node_modules/*' -prune \) -name \*.js | xargs jshint"
 alias csall="find . -not \( -path './node_modules/*' -prune \) -name \*.js | xargs jscs"
-
-source ~/.bash_profile
-source ~/.inputrc # Not really intented like this no?
