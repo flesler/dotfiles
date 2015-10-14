@@ -2,15 +2,18 @@
 # Edits one of the dotfiles and then re-sources it
 #
 # USAGE:
-#	- rc # edit .bashrc
-#	- rc aliases # edit .bash_aliases
-#	- rc input # edit .inputrc
+#	$ rc # edit .bashrc
+#	$ rc aliases # edit .bash_aliases
+#	$ rc input # edit .inputrc
 
-NAME=${1:=bash}
+NAME=${1:-bash}
 
-for $file in "~/$NAME" "~/.$NAME" "~/.$NAMErc" "~/.bash_$NAME"; do
-	if [ -f "$file" ] ; then
-		vi $file && . $file
+for file in "$NAME" ".$NAME" ".${NAME}rc" ".bash_$NAME"; do
+	path="$HOME/$file"
+	if [ -f "$path" ]; then
+		echo "editing $file"
+		# FIXME: It's source to this script and not to shell
+		vi "$path" && . "$path"
 		exit
 	fi
 done
