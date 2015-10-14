@@ -1,0 +1,30 @@
+#!/usr/bin/env node
+/**
+ * Evaluates a line of JS, similiar to node -e but
+ * there is no need to wrap in console.log or quote the code
+ * joins multiple arguments as if one line of code
+ * resolves requires path to the current directory
+ *
+ * USAGE:
+ * $ evaljs "1 + 1"
+ * $ evaljs 1 + 1
+ * $ evaljs "{a:1, b:2}"
+ * $ evaljs "require('./util').method()"
+ */
+var path = require('path'),
+	_require = require;
+
+// Hack require() to use CWD instead of __dirname as base
+require = function(s) {
+	if (s.charAt(0) === '.') {
+		s = path.resolve(s);
+	}
+	return _require(s);
+};
+// Treat several arguments as a single block of code
+var code = process.argv.slice(2).join(' ');
+// JSON objects need wrapping
+if (code.charAt(0) === '{') {
+	code = '('+code+')';
+}
+console.log(eval(code));
