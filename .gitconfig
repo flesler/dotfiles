@@ -12,6 +12,7 @@
 	ci = commit -m
 	p = push
 	pf = push -f
+	pr = pull --rebase
 	st = stash
 	co = checkout
 	br = branch
