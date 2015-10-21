@@ -13,6 +13,7 @@
 	p = push
 	pf = push -f
 	pr = pull --rebase
+	pb = publish --registry 'https://registry.npmjs.org/'
 	st = stash
 	co = checkout
 	br = branch
@@ -26,6 +27,7 @@
 	autocrlf = false
 	quotepath = false
 	editor = subl
+	ignorecase = false
 [color]
 	# Use colors in Git commands that are capable of colored output when
 	ui = auto
