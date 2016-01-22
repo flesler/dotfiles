@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/sh -eu
 # - git adds all files
 # - commits them with the given message
 # - copies the commit message to the clipboard

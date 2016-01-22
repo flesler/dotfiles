@@ -1,0 +1,50 @@
+#!/usr/bin/env node
+/**
+ * Evaluates a line of JS using `node -pe` (no console.log needed)
+ * Joins multiple console arguments as a single block of code
+ * Handles JSON object input (unlike node -pe)
+ * resolves requires path to the current directory
+ * if -c is provided, result is copied to clipboard instead of being printed
+ *
+ * USAGE:
+ * $ evaljs 1 + 1
+ * $ evaljs "1 + 1"
+ * $ evaljs "1 + 1" -c
+ * $ evaljs "{a:1, b:2}"
+ * $ evaljs "require('./util').method()"
+ */
+var
+	spawn = require('child_process').spawn,
+	err = process.stderr,
+	out = process.stdout;
+
+const BINS = {
+	win32: 'clip',
+	linux: 'xclip -selection clipboard',
+	darwin: 'pbcopy'
+};
+
+function getCopyStream() {
+	var args = BINS[process.platform].split(' ');
+	var copy = spawn(args.shift(), args);
+	return copy.stdin;
+}
+
+var args = process.argv.slice(2).filter(function(arg) {
+	if (arg === '-c') {
+		err = out = getCopyStream();
+		return false;
+	}
+	return true;
+});
+
+// Treat several arguments as a single block of code
+var code = args.join(' ');
+// JSON objects need wrapping
+if (code.charAt(0) === '{') {
+	code = '('+code+')';
+}
+
+var node = spawn('node', ['-pe', code]);
+node.stderr.pipe(err);
+node.stdout.pipe(out);

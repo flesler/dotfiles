@@ -1,6 +1,6 @@
 #!/bin/sh
 # Converts a Unix path to absolute Windows form
-# Can take more than once parameter
+# Can take more than one parameter
 # Will output each one in a new line
 #
 # USAGE:

@@ -5,51 +5,45 @@
 
 # FIXME: `read` doesn't work when used non-interactive
 
-ZIP=master.zip
-URL=https://github.com/flesler/dotfiles/archive/$ZIP
-TMP=dotfiles-master
-EXCLUDE="$TMP/README.md $TMP/install.sh"
-BKP_SUF=.bkp #~
+DF=~/.dotfiles
+BKP=.bkp #~
 
-# Ensure clean state
-rm -rf $TMP
-# Download and extract zip
-curl $URL -sLOk
-unzip -q $ZIP -d . -x $EXCLUDE
-rm $ZIP
+if [ -d $DF ]; then
+	cd $DF
+	git pull --rebase
+else
+	git clone https://github.com/flesler/dotfiles.git $DF
+	cd $DF
+fi
 
-for file in `cd $TMP && find`; do
-	[ "$file" = "." ] && continue
-
-	src=$TMP/$file
-	dest=~/$file
+for src in $(find home ! -name home); do
+	dest=${src/home/~}
 	# Create directories if missing on destination
 	if [ -d "$src" ]; then
-		if [ ! -d "$dest" ]; then
-			mkdir -p $dest
-			echo "created directory $dest"
-		fi
+		mkdir -p "$dest"
 		continue
 	fi
-	# If conflicted...
+	# If conflicted..., override if it's a symlink
 	if [ -f "$dest" ]; then
-		echo -n "$dest exists. (s)kip, (o)verwrite, (b)ackup?"
+		echo -n "$dest is a file. (s)kip, (o)verwrite, (b)ackup?"
 		read -sn 1 -p ' ' chr
 		echo
 		case $chr in
 			s) continue;;
 			o) ;;
 			b) 
-				cp "$dest" "$dest$BKP_SUF"
-				echo "backed up $dest to $dest$BKP_SUF";;
+				mv "$dest" "$dest$BKP"
+				echo "backed up $dest to $dest$BKP";;
 			*)
 				echo "unknown letter '$chr', skipping"
 				continue;;
 		esac
 	fi
 	
-	cp -f "$src" "$dest"
-	echo "copied $src to $dest"
+	# FIXME: Not really symlinking in Git Bash
+	ln -sf "$src" "$dest"
+	echo "symlinked $src to $dest"
 done
 
-rm -r $TMP
+# Create an empty one so the user notices it
+touch ~/.bash_extras

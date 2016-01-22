@@ -1,0 +1,10 @@
+BoldAsFont=no
+RightClickAction=paste
+Term=xterm
+Font=Consolas
+FontSmoothing=default
+FontIsBold=no
+FontHeight=12
+BackspaceSendsBS=no
+ConfirmExit=no
+ClicksPlaceCursor=yes

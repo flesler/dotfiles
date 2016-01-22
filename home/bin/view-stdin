@@ -1,0 +1,13 @@
+#!/bin/sh
+# Pipes stdin into an editor (like Sublime)
+# It creates a temp file, opens it and deletes it immediately
+# When no editor is provided in first arg, $EDITOR is used
+#
+# USAGE:
+#	- echo "something" | view-stdin
+#	- echo "something" | view-stdin vi
+
+CMD=${*:-${EDITOR:-vi}}
+TMP=/tmp/${RANDOM}${RANDOM}
+
+cat >$TMP && $CMD $TMP && rm $TMP
