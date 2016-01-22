@@ -1,12 +1,12 @@
-#!/bin/sh -i
+#!/bin/sh
 # Downloads all the dotfiles and copies them to ~
 # You can run it with this:
 # curl -s https://raw.githubusercontent.com/flesler/dotfiles/master/install.sh | sh
 
-# FIXME: `read` doesn't work when used non-interactive
-
 DF=~/.dotfiles
 BKP=.bkp #~
+
+set -ieu
 
 if [ -d $DF ]; then
 	cd $DF
@@ -23,8 +23,13 @@ for src in $(find home ! -name home); do
 		mkdir -p "$dest"
 		continue
 	fi
-	# If conflicted..., override if it's a symlink
+
+	# If conflicted
 	if [ -f "$dest" ]; then
+
+		# Same file, auto-skip
+		cmp -s "$src" "$dest" && continue
+
 		echo -n "$dest is a file. (s)kip, (o)verwrite, (b)ackup?"
 		read -sn 1 -p ' ' chr
 		echo
@@ -38,11 +43,13 @@ for src in $(find home ! -name home); do
 				echo "unknown letter '$chr', skipping"
 				continue;;
 		esac
+	else
+		echo "copying to $dest"
 	fi
 	
+	cp "$src" "$dest"
 	# FIXME: Not really symlinking in Git Bash
-	ln -sf "$src" "$dest"
-	echo "symlinked $src to $dest"
+	#ln -sf "$src" "$dest"
 done
 
 # Create an empty one so the user notices it
