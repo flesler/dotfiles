@@ -1,0 +1,50 @@
+[user]
+	name = Ariel Flesler
+	email = aflesler@gmail.com
+[github]
+  user = flesler
+[alias]
+	s = status -s
+	d = diff
+	a = add -A
+	rs = reset
+	undo = rs --soft HEAD^
+	discard = rs --hard HEAD^
+	co = checkout
+	rev = co --
+	p = push
+	pf = p -f
+	pr = pull --rebase
+	st = add -A && stash
+	pop = stash pop
+	stpll = st && pr && pop
+	stpsh = st && p && pop
+	br = branch
+	rbc = a && rebase --continue
+	rba = rebase --abort
+	rbm = rebase master
+	lg = log --graph --pretty=format:'%Cred%h%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'
+[core]
+	# Use custom `.gitignore`
+	excludesfile = ~/.gitignore
+	autocrlf = false
+	quotepath = false
+	editor = subl
+	ignorecase = false
+[color]
+	# Use colors in Git commands that are capable of colored output when
+	ui = auto
+[push]
+	# Make `git push` push relevant annotated tags when pushing branches out.
+	followTags = true
+	default = matching
+[pull]
+	rebase = true
+[diff]
+	# Detect copies as well as renames
+	renames = copies
+[rerere]
+	enabled = 1
+[help]
+	# Automatically correct and execute mistyped commands
+	autocorrect = 1
