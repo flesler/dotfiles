@@ -2,9 +2,9 @@
 # Downloads all the dotfiles and copies them to ~
 #
 # Run it interactively (decide on conflicts):
-# curl -s https://raw.githubusercontent.com/flesler/dotfiles/master/install.sh | sh -i
+# sh -i <(curl -s https://raw.githubusercontent.com/flesler/dotfiles/master/install.sh)
 #
-# Remove the -u to automatically override any conflicted file
+# Remove the -i to automatically override any conflicted file
 
 DF=~/.dotfiles
 BKP=.bkp #~
