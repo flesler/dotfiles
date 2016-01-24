@@ -7,20 +7,19 @@
 	s = status -s
 	d = diff
 	a = add -A
-	rs = reset
-	undo = rs --soft HEAD^
-	discard = rs --hard HEAD^
+	undo = reset --soft HEAD^
+	discard = reset --hard HEAD^
 	co = checkout
-	rev = co --
+	rev = checkout --
 	p = push
-	pf = p -f
+	pf = push -f
 	pr = pull --rebase
 	st = add -A && stash
 	pop = stash pop
-	stpll = st && pr && pop
-	stpsh = st && p && pop
+	stpll = add -A && stash && pull --rebase && stash pop
+	stpsh = add -A && stash && push && stash pop
 	br = branch
-	rbc = a && rebase --continue
+	rbc = add -A && rebase --continue
 	rba = rebase --abort
 	rbm = rebase master
 	lg = log --graph --pretty=format:'%Cred%h%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'
