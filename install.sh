@@ -11,7 +11,10 @@ BKP=.bkp #~
 
 if [ -d "$DF" ]; then
 	cd "$DF"
-	git pull --rebase
+	# -U for no update
+	if [[ "$*" != -*U* ]]; then
+		git pull --rebase
+	fi
 else
 	git clone https://github.com/flesler/dotfiles.git "$DF"
 	cd "$DF"
