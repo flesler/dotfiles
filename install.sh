@@ -6,19 +6,19 @@
 #
 # Remove the -i to automatically override any conflicted file
 
-DF=~/.dotfiles
+DF=~/dotfiles
 BKP=.bkp #~
 
-if [ -d $DF ]; then
-	cd $DF
+if [ -d "$DF" ]; then
+	cd "$DF"
 	git pull --rebase
 else
-	git clone https://github.com/flesler/dotfiles.git $DF
-	cd $DF
+	git clone https://github.com/flesler/dotfiles.git "$DF"
+	cd "$DF"
 fi
 
 for src in $(find home ! -name home); do
-	dest=${src/home/~}
+	dest="${src/home/~}"
 
 	# Create directories if missing on destination
 	if [ -d "$src" ]; then

@@ -17,8 +17,8 @@
 	st = add -A && stash
 	pop = stash pop
 	stpll = add -A && stash && pull --rebase && stash pop
-	stpsh = add -A && stash && push && stash pop
 	br = branch
+	rb = rebase
 	rbc = add -A && rebase --continue
 	rba = rebase --abort
 	rbm = rebase master
