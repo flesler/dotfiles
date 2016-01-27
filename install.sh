@@ -11,7 +11,7 @@ BKP=.bkp #~
 
 if [ -d "$DF" ]; then
 	cd "$DF"
-	#git pull --rebase
+	git pull --rebase
 else
 	git clone https://github.com/flesler/dotfiles.git "$DF"
 	cd "$DF"
