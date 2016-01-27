@@ -1,9 +1,0 @@
-#!/bin/sh -eu
-# - git adds all files
-# - commits them with the given message
-# - copies the commit message to the clipboard
-#
-# USAGE:
-#	- commit "my message"
-
-git add -A && git commit -m "$1" && echo "$1" | clip
