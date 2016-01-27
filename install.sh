@@ -56,5 +56,5 @@ done
 
 # Create an empty one so the user notices it
 touch ~/.bash_extras
-# (Re)source everything
+# FIXME: (Re)source everything (not really working as it's a shell script)
 . ~/.bashrc
