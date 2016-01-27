@@ -2,7 +2,7 @@
 
 # Create a directory and cd to it
 function mkc() {
-	mp "$@" && cd "$@"
+	mkdir -p "$@" && cd "$@"
 }
 
 # Converts one or more Unix paths to absolute Windows form
@@ -65,6 +65,6 @@ function rc() {
 # Git
 
 # Commits all files with the provided message and copies it to clipboard
-function commit() {
+function cm() {
 	git add -A && git commit -m "$1" && echo "$1" | clip
 }
