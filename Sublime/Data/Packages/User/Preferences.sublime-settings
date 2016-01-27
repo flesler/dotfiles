@@ -9,7 +9,8 @@
 		"CVS",
 		"node_modules"
 	],
-	"font_size": 13.0,
+	"font_face": "Dina",
+	"font_size": 10,
 	"ignored_packages":
 	[
 		"Vintage"
