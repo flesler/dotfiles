@@ -22,10 +22,8 @@ sh <(curl -s https://raw.githubusercontent.com/flesler/dotfiles/master/install.s
 
 ```bash
 df=~/dotfiles
-mkdir -p $df
 git clone git://github.com/flesler/dotfiles.git $df
-cd $df
-sh -i install.sh
+sh -i $df/install.sh
 ```
 
 ### Manually via ZIP
