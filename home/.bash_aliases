@@ -19,7 +19,7 @@ alias na='node app'
 alias prod='NODE_ENV=production'
 alias r='npm run'
 # Convert an epoch with or without milliseconds to ISO string
-alias ts='node -pe "new Date(+(process.argv[1]+'000').slice(0,13)).toISOString()" -- '
+alias ts='node -pe "new Date(+(process.argv[1]+'\''000'\'').slice(0,13)).toISOString()" -- '
 alias lintall="find . -not \( -path './node_modules/*' -prune \) -name \*.js | xargs jshint"
 alias csall="find . -not \( -path './node_modules/*' -prune \) -name \*.js | xargs jscs"
 
