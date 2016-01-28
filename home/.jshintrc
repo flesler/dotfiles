@@ -16,7 +16,7 @@
 	"scripturl": true,
 	"strict": false,
 	"loopfunc": true,
-	"quotmark": "single",
+	//"quotmark": "single",
 
 	"esnext": true,
 	"globals": {},
