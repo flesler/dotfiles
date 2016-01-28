@@ -26,10 +26,14 @@ alias csall="find . -not \( -path './node_modules/*' -prune \) -name \*.js | xar
 # Git
 
 # Bring these aliases from .gitconfig to global scope
-for k in s d a undo rev discard p pf pr st pop stpll rbc rba rbm lg; do
+for k in s d a undo rev discard p pf pr pop rba rbm lg; do
 	alias $k="git $k"
 done
 
+alias st='a && git stash'
+alias stpll='st && pr && pop'
+alias stpsh='st && pr && p && pop'
+alias rbc='a && git rbc'
 alias misc='a && commit "Modified $(git diff --name-only HEAD^)" && p'
 
 # Internet
