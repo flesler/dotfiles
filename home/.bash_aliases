@@ -36,3 +36,6 @@ alias misc='a && commit "Modified $(git diff --name-only HEAD^)" && p'
 
 alias localip='ipconfig | grep -a IPv4 | tr " " "\n" | tail -n1'
 alias online='ping yahoo.com -t'
+
+# Dotfiles
+alias dotfiles='sh ~/dotfiles/install.sh && . ~/.bashrc'
