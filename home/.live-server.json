@@ -1,0 +1,10 @@
+{
+  "port": 8080,
+  "host": "localhost",
+  "root": ".",
+  "open": true,
+  "ignore": "",
+  "ignorePattern": "node_modules,.git",
+  "file": "index.html",
+  "wait": 500
+}
