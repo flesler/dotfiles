@@ -40,6 +40,11 @@ function viewstdin() {
 	cat >$tmp && $cmd $tmp && rm $tmp
 }
 
+# Take all arguments as a command, execute it and copy to clipboard
+function c() {
+	sh -c "$*" | clip
+}
+
 # Config
 
 # Edits one of the dotfiles and then re-sources it
