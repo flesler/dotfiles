@@ -23,8 +23,8 @@ alias ts='node -pe "new Date(+(process.argv[1]+'\''000'\'').slice(0,13)).toISOSt
 alias lintall="find . -not \( -path './node_modules/*' -prune \) -name \*.js | xargs jshint"
 alias csall="find . -not \( -path './node_modules/*' -prune \) -name \*.js | xargs jscs"
 
-# Somewhere in Git Bash, node is aliases to 'winpty node.exe'. It's not needed and breaks piping
-unalias -a node
+# Git Bash aliases node to 'winpty node.exe' which is not needed and breaks piping
+unalias node &>/dev/null
 
 # Git
 
