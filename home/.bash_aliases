@@ -23,6 +23,9 @@ alias ts='node -pe "new Date(+(process.argv[1]+'\''000'\'').slice(0,13)).toISOSt
 alias lintall="find . -not \( -path './node_modules/*' -prune \) -name \*.js | xargs jshint"
 alias csall="find . -not \( -path './node_modules/*' -prune \) -name \*.js | xargs jscs"
 
+# Somewhere in Git Bash, node is aliases to 'winpty node.exe'. It's not needed and breaks piping
+unalias -a node
+
 # Git
 
 # Bring these aliases from .gitconfig to global scope
@@ -42,4 +45,5 @@ alias localip='ipconfig | grep -a IPv4 | tr " " "\n" | tail -n1'
 alias online='ping yahoo.com -t'
 
 # Dotfiles
+
 alias dotfiles='sh ~/dotfiles/install.sh && . ~/.bashrc'
