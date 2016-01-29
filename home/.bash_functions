@@ -71,5 +71,5 @@ function rc() {
 
 # Commits all files with the provided message and copies it to clipboard
 function cm() {
-	git add -A && git commit -m "$1" && echo "$1" | clip
+	git add -A && git commit -m "$*" && echo "$*" | clip
 }
