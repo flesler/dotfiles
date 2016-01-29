@@ -11,4 +11,4 @@ export EDITOR='subl -w'
 export PAGER=less
 
 # This value will appear in the prompt, empty by default
-export MSYSTEM=
+export SYS_FLAG=
