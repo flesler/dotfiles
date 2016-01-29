@@ -9,6 +9,7 @@
 	a = add -A
 	undo = reset --soft HEAD^
 	discard = reset --hard HEAD^
+	cm = commit -m
 	co = checkout
 	rev = checkout --
 	p = push
