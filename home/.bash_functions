@@ -41,17 +41,25 @@ function viewstdin() {
 }
 
 # Take all arguments as a command, execute it and copy to clipboard
+# If no argument is provided, copy last command executed to clipboard
+# USAGE:
+#	$ c echo 1 2 # "1 2" copied
+#	$ c          # "echo 1 2" copied
 function c() {
-	sh -c "$*" | clip
+	if [ $# == 0 ]; then
+		history | tail -n2 | head -n1 | sed 's/^[0-9 ]*//' | clip
+	else
+		sh -c "$*" | clip
+	fi
 }
 
 # Config
 
 # Edits one of the dotfiles and then re-sources it
 # USAGE:
-#	$ rc # edit .bashrc
+#	$ rc         # edit .bashrc
 #	$ rc aliases # edit .bash_aliases
-#	$ rc input # edit .inputrc
+#	$ rc input   # edit .inputrc
 function rc() {
 	name=${1:-bash}
 	editor=${EDITOR:-vi}
