@@ -4,6 +4,12 @@
 
 MODULES='parallel uver live-server nip jshint htmlhint jscs nodemon node-inspector'
 
+# TODO: Look for a static server that supports:
+# - LiveReload
+# - Jade and Stylus support
+# - Static files can be deployed to a static asset host
+# - Ideally supports config file on $HOME
+
 for module in $MODULES; do
 	echo "Installing $module..."
 	npm install --global ${module}@latest
