@@ -3,8 +3,7 @@
   "host": "localhost",
   "root": ".",
   "open": true,
-  "ignore": "",
-  "ignorePattern": "node_modules,.git",
+  "ignore": ["node_modules",".git"],
   "file": "index.html",
   "wait": 500
 }
