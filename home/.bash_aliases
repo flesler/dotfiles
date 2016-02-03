@@ -23,8 +23,9 @@ alias ts='node -pe "new Date(+(process.argv[1]+'\''000'\'').slice(0,13)).toISOSt
 alias lintall="find . -not \( -path './node_modules/*' -prune \) -name \*.js | xargs jshint"
 alias csall="find . -not \( -path './node_modules/*' -prune \) -name \*.js | xargs jscs"
 
-# Git Bash aliases node to 'winpty node.exe' which is not needed and breaks piping
+# Git Bash aliases node to 'winpty node.exe' which is needed for repl but breaks piping
 unalias node &>/dev/null
+alias repl='winpty node'
 
 # Git
 
