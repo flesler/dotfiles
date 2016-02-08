@@ -53,6 +53,15 @@ function c() {
 	fi
 }
 
+function kl() {
+	ps -s |\
+		grep $1 |\
+		cut -d' ' -f4 |\
+		while read pid
+			do kill -9 $pid
+		done
+}
+
 # Config
 
 # Edits one of the dotfiles and then re-sources it
