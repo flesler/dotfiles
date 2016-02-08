@@ -24,6 +24,9 @@
   { "keys": ["ctrl+shift+l"], "command": "sublimelinter_show_all_errors" },
   { "keys": ["ctrl+shift+e"], "command": "urlencode" },
 	{ "keys": ["ctrl+shift+d"], "command": "urldecode" },
-	// Avoid accidental cut while deleting, every-single-time
-	{ "keys": ["shift+delete"], "command": "right_delete" }
+	 // Change font size with ctrl+scroll wheel
+  { "button": "scroll_down", "modifiers": ["ctrl"], "command": "null" },
+  { "button": "scroll_up", "modifiers": ["ctrl"], "command": "null" },
+  // Avoid accidental cut while deleting, every-single-time
+  { "keys": ["shift+delete"], "command": "right_delete" }
 ]

@@ -7,6 +7,7 @@
 	[
 		"Crontab Syntax",
 		"HTML-CSS-JS Prettify",
+		"Markdown Preview",
 		"Package Control",
 		"Pretty JSON",
 		"SideBarEnhancements",
@@ -14,6 +15,7 @@
 		"SublimeLinter-contrib-htmlhint",
 		"SublimeLinter-jscs",
 		"SublimeLinter-jshint",
+		"Sync View Scroll",
 		"URLEncode"
 	]
 }
