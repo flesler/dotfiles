@@ -97,11 +97,23 @@ function cm() {
 # IO
 
 # Copies all arguments to the pendrive as a single gzipped tar
+# Did a benchmark, copied 2k small files:
+# - cp -r : 230 seconds 
+# - tar   : 4 seconds 
+# - tar.gz: 1 second
+#
 # USAGE:
 #	$ pendrive dir1 dir2 file*
+#	$ pendrive -z dir1 dir2 file*
+#	$ pendrive g: -z dir1 dir2 file*
 function pendrive() {
-	# Precarious, might not always work, get highest drive letter
-	drive=$(mount | grep ": " | sort | tail -n1 | cut -d' ' -f3)
+	if [ "${1:1:1}" = : ]; then
+		drive=/${1:0:1}
+		shift
+	else
+		# Guess pendrive drive. Might not always work, get highest drive letter
+		drive=$(mount | grep ": " | sort | tail -n1 | cut -d' ' -f3)
+	fi
 
 	tarOpts=
 	if [ "${1:0:1}" = "-" ]; then
@@ -124,8 +136,7 @@ function pendrive() {
 	fi
 
 	echo "Packing all to $dest..."
-	echo "tar $tarOpts -cvf $dest $@"
 	start=$SECONDS
-	tar $tarOpts -cvf $dest $@
-	echo "Took $(( $SECONDS - $start )) seconds"
+	tar $tarOpts -cf $dest $@
+	echo "Took $(( $SECONDS - $start )) second(s)"
 }
