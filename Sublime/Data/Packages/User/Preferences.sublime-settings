@@ -27,8 +27,8 @@
 		"node_modules",
 		"temp/logger"
 	],
-	"font_face": "Dina",
-	"font_size": 10,
+	"font_face": "Consolas",
+	"font_size": 12,
 	"ignored_packages":
 	[
 		"Vintage"
