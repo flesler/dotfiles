@@ -53,10 +53,13 @@ function c() {
 	fi
 }
 
+# Kills all processes that match a filter on ps -s
+# USAGE:
+#	$ kl "/node"
 function kl() {
 	ps -s |\
 		grep $1 |\
-		cut -d' ' -f4 |\
+		sed -r 's/ *([0-9]+) .*/\1/' |\
 		while read pid
 			do kill -9 $pid
 		done
@@ -89,4 +92,40 @@ function rc() {
 # Commits all files with the provided message and copies it to clipboard
 function cm() {
 	git add -A && git commit -m "$*" && echo "$*" | clip
+}
+
+# IO
+
+# Copies all arguments to the pendrive as a single gzipped tar
+# USAGE:
+#	$ pendrive dir1 dir2 file*
+function pendrive() {
+	# Precarious, might not always work, get highest drive letter
+	drive=$(mount | grep ": " | sort | tail -n1 | cut -d' ' -f3)
+
+	tarOpts=
+	if [ "${1:0:1}" = "-" ]; then
+		tarOpts=$1
+		shift
+	fi
+
+	if [ $# -eq 1 ]; then
+		file=$(basename "$1")
+	else
+		file=$(dirname "$1")
+		if [ "$file" = "." ]; then
+			file=$(basename "$PWD")
+		fi
+	fi
+
+	dest=$drive/$file.tar
+	if [[ "$tarOpts" = -*z* ]]; then
+		dest=$dest.gz
+	fi
+
+	echo "Packing all to $dest..."
+	echo "tar $tarOpts -cvf $dest $@"
+	start=$SECONDS
+	tar $tarOpts -cvf $dest $@
+	echo "Took $(( $SECONDS - $start )) seconds"
 }
