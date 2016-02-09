@@ -1,4 +1,4 @@
 {
 	"verbose":false,
-	"watch":["./*.js*", "./lib/", "./config/", "./src/", "./bin/"]
+	"watch":["./*.js*", "./lib/", "./config/", "./bin/"]
 }
