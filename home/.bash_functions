@@ -42,14 +42,15 @@ function viewstdin() {
 
 # Take all arguments as a command, execute it and copy to clipboard
 # If no argument is provided, copy last command executed to clipboard
+# Uses head -c-1 to remove the new line that is always at the end
 # USAGE:
 #	$ c echo 1 2 # "1 2" copied
 #	$ c          # "echo 1 2" copied
 function c() {
 	if [ $# == 0 ]; then
-		history | tail -n2 | head -n1 | sed 's/^[0-9 ]*//' | clip
+		history | tail -n2 | head -n1 | sed 's/^[0-9 ]*//' | head -c-1 | clip
 	else
-		sh -c "$*" | clip
+		sh -c "$*" | head -c-1 | clip
 	fi
 }
 
