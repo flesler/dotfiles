@@ -8,13 +8,14 @@
 		"*.jar",
 		"*.jpeg",
 		"*.jpg",
-		"*.gz",
 		"*.pdf",
 		"*.png",
 		"*.swf",
 		"*.tga",
 		"*.ttf",
-		"*.zip"
+		"*.zip",
+		"*.gz",
+		"temp/**"
 	],
 	"color_scheme": "Packages/User/SublimeLinter/Monokai (SL).tmTheme",
 	"default_line_ending": "unix",
@@ -28,7 +29,7 @@
 		"temp/logger"
 	],
 	"font_face": "Consolas",
-	"font_size": 12,
+	"font_size": 13.0,
 	"ignored_packages":
 	[
 		"Vintage"

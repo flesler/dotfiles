@@ -138,6 +138,6 @@ function pendrive() {
 
 	echo "Packing all to $dest..."
 	start=$SECONDS
-	tar $tarOpts -cf $dest $@
+	GZIP=-9 tar $tarOpts -cf $dest $@
 	echo "Took $(( $SECONDS - $start )) second(s)"
 }
