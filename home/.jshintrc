@@ -14,8 +14,9 @@
 	"unused": "vars",
 	"undef": true,
 	"scripturl": true,
-	"strict": false,
 	"loopfunc": true,
+	// Requires a modern version of jshint
+	"strict": "implied",
 	//"quotmark": "single",
 
 	"esnext": true,
