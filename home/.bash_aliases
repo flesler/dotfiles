@@ -20,7 +20,8 @@ alias prod='NODE_ENV=production'
 alias r='npm run'
 # Convert an epoch with or without milliseconds to ISO string
 alias ts='node -pe "new Date(+(process.argv[1]+'\''000'\'').slice(0,13)).toISOString()" -- '
-alias lintall="find . -not \( -path './node_modules/*' -prune \) -name \*.js | xargs jshint --verbose"
+# This is hacky, but nor --exclude node_modules or --exclude-path ~/.jshintignore work as expected
+alias lintall='cp ~/.jshintignore . && jshint --verbose . && rm .jshintignore'
 alias csall="find . -not \( -path './node_modules/*' -prune \) -name \*.js | xargs jscs"
 
 # Git Bash aliases node to 'winpty node.exe' which is needed for repl but breaks piping
