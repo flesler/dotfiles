@@ -17,6 +17,7 @@
 	"loopfunc": true,
 	// Requires a modern version of jshint
 	"strict": "implied",
+	"validthis": true,
 	//"quotmark": "single",
 
 	"esnext": true,
