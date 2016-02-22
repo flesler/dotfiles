@@ -66,6 +66,13 @@ function kl() {
 		done
 }
 
+# Alias for --help | less
+# USAGE:
+#	$ h grep
+function h() {
+	$@ --help | less
+}
+
 # Config
 
 # Edits one of the dotfiles and then re-sources it
@@ -140,4 +147,13 @@ function pendrive() {
 	start=$SECONDS
 	GZIP=-9 tar $tarOpts -cf $dest $@
 	echo "Took $(( $SECONDS - $start )) second(s)"
+}
+
+# Node/NPM
+
+# Returns the version of a dependency even if nested
+# USAGE:
+#	$ kl "/node"
+function npmv() {
+	find . -path "*/$1/package.json" | xargs grep -H version | sed -E 's/package.json|"version": "|",//g'
 }
