@@ -1,6 +1,4 @@
 [
-	{ "keys": ["alt+up"], "command": "swap_line_up" },
-	{ "keys": ["alt+down"], "command": "swap_line_down" },
 	{ "keys": ["ctrl+d"], "command": "run_macro_file", "args": {"file": "Packages/Default/Delete Line.sublime-macro"} },
 	{ "keys": ["shift+enter"], "command": "run_macro_file", "args": {"file": "Packages/Default/Add Line.sublime-macro"} },
 	{ "keys": ["ctrl+alt+down"], "command": "duplicate_line" },
@@ -24,9 +22,15 @@
   { "keys": ["ctrl+shift+l"], "command": "sublimelinter_show_all_errors" },
   { "keys": ["ctrl+shift+e"], "command": "urlencode" },
 	{ "keys": ["ctrl+shift+d"], "command": "urldecode" },
-	 // Change font size with ctrl+scroll wheel
+	// Change font size with ctrl+scroll wheel
   { "button": "scroll_down", "modifiers": ["ctrl"], "command": "null" },
   { "button": "scroll_up", "modifiers": ["ctrl"], "command": "null" },
+  // Change line-swapping keys
+	{ "keys": ["alt+up"], "command": "swap_line_up" },
+	{ "keys": ["alt+down"], "command": "swap_line_down" },
+  // Disable default, it's annoying when selecting
+	{ "keys": ["ctrl+shift+up"], "command": "null" },
+	{ "keys": ["ctrl+shift+down"], "command": "null" },
   // Avoid accidental cut while deleting, every-single-time
   { "keys": ["shift+delete"], "command": "right_delete" }
 ]
