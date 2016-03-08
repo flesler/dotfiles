@@ -3,6 +3,9 @@
 	email = aflesler@gmail.com
 [github]
   user = flesler
+[credential]
+  # Remember credentials when cloning over HTTPS
+	helper = wincred
 [alias]
 	s = status -s
 	d = diff
