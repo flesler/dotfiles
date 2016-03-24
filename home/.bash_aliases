@@ -39,7 +39,7 @@ alias st='a && git stash'
 alias stpll='st && pr && pop'
 alias stpsh='st && pr && p && pop'
 alias rbc='a && git rbc'
-alias misc='a && git cm "Modified $(git diff --name-only HEAD)" && p'
+alias misc='a && git cm "Modified $(git diff --name-only HEAD | grep -Eo ''[^/]+$'')" && p'
 
 # Internet
 
