@@ -36,7 +36,9 @@ for src in $(find home ! -name home); do
 		continue
 	# If conflicted AND interactive
 	elif [ -n "$PS1" ]; then
-		echo -n "$dest is a file. (s)kip, (o)verwrite, (b)ackup?"
+		# git diff has colors unlike diff
+		git diff -U0 "$dest" "$src"
+		echo -n "$dest already exists. (s)kip, (o)verwrite, (b)ackup?"
 		read -sn 1 -p ' ' chr
 		echo
 		case $chr in

@@ -48,4 +48,4 @@ alias online='ping yahoo.com -t'
 
 # Dotfiles
 
-alias dotfiles='sh ~/dotfiles/install.sh && . ~/.bashrc'
+alias dotfiles='sh -eui ~/dotfiles/install.sh && . ~/.bashrc'
