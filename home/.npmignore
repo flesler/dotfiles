@@ -1,6 +1,5 @@
 # To be copied on each project
 .git*
-.npmignore
 *.log
 *.md
 *.tgz
