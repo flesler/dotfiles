@@ -11,6 +11,7 @@ alias rr='rm -r'
 alias rrf='rr -f'
 alias mp='mkdir -p'
 alias pathlist='echo "$PATH" | tr ":" "\n"'
+alias ff="grep -A1 -nrFH . --exclude-dir={.git,node_modules} --include=*.{js,jade,css,styl,sql,sh,json} -e"
 
 # Node.js
 

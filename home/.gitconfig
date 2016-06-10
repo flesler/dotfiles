@@ -30,7 +30,7 @@
 	excludesfile = ~/.gitignore
 	autocrlf = false
 	quotepath = false
-	editor = subl
+	editor = vi
 	ignorecase = false
 [color]
 	# Use colors in Git commands that are capable of colored output when
