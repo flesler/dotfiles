@@ -46,7 +46,8 @@ alias misc='a && git cm "Modified $(git diff --name-only HEAD | grep -Eo ''[^/]+
 # Internet
 
 alias localip='ipconfig | grep -a IPv4 | tr " " "\n" | tail -n1'
-alias online='ping yahoo.com -t'
+# Ping one of Google's DNS servers
+alias online='ping 8.8.8.8 -t'
 
 # Dotfiles
 
