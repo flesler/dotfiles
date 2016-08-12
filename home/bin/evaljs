@@ -45,6 +45,7 @@ if (code.charAt(0) === '{') {
 	code = '('+code+')';
 }
 
-var node = spawn('node', ['-pe', code]);
+var node = spawn('node', ['-p']);
+node.stdin.end(code);
 node.stderr.pipe(err);
 node.stdout.pipe(out);
