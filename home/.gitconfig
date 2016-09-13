@@ -38,7 +38,7 @@
 [push]
 	# Make `git push` push relevant annotated tags when pushing branches out.
 	followTags = true
-	default = matching
+	default = current
 [pull]
 	rebase = true
 [diff]
