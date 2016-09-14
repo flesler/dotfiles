@@ -2,7 +2,7 @@
 # Install all the global NPM modules I usually use
 # All this could be a one-liner, made it fancier to justify having an sh just for this
 
-MODULES='parallel uver-cli live-server nip jshint htmlhint nodemon public-ip'
+MODULES='parallel uver-cli live-server nip jshint htmlhint nodemon public-ip ip-location-cli'
 # Problematic or rarely used
 MANUAL='node-inspector jscs node-pv'
 

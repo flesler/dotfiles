@@ -151,6 +151,23 @@ function pendrive() {
 
 # Node/NPM
 
+function n() {
+	pref=$1
+	# Just n to see the current version
+	if [ "$pref" == "" ]; then
+		node --version
+		return
+	fi
+
+	# Can provide just the major or major.minor version
+	ver=$(nvm list 2>1 | grep -Eo "$pref\.[0-9.]+")
+	if [ "$ver" == "" ]; then
+		1>2 echo "No Node.js version found starting with $pref"
+	else
+		nvm use $ver
+	fi
+}
+
 # Returns the version of a dependency even if nested
 # USAGE:
 #	$ kl "/node"
