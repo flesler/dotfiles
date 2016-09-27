@@ -19,7 +19,7 @@ alias ff="grep -A1 -nrFH --exclude-dir={.git,node_modules} --include=*.{js,jade,
 alias ns='node server'
 alias na='node app'
 alias prod='NODE_ENV=production'
-alias r='npm run'
+alias r='npm run -s'
 # Convert an epoch with or without milliseconds to ISO string
 alias ts='node -pe "new Date(+(process.argv[1]+'\''000'\'').slice(0,13)).toISOString()" -- '
 # This is hacky, but nor --exclude node_modules or --exclude-path ~/.jshintignore work as expected
