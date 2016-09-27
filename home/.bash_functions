@@ -106,8 +106,8 @@ function cm() {
 
 # Copies all arguments to the pendrive as a single gzipped tar
 # Did a benchmark, copied 2k small files:
-# - cp -r : 230 seconds 
-# - tar   : 4 seconds 
+# - cp -r : 230 seconds
+# - tar   : 4 seconds
 # - tar.gz: 1 second
 #
 # USAGE:
@@ -166,6 +166,17 @@ function n() {
 	else
 		nvm use $ver
 	fi
+}
+
+function nr() {
+	if [ ! -f "package.json" ]; then
+		return
+	fi
+
+	node_ver=$(grep '"node"' package.json | sed -E 's/.+"([0-9.]+)\..+/\1/')
+	# If current node version doesn't match the requirement, switch
+	node -v | grep -q ${node_ver}. || n $node_ver
+	npm run -s ${*:-start}
 }
 
 # Returns the version of a dependency even if nested
