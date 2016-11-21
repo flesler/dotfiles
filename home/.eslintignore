@@ -1,0 +1,8 @@
+**/plugins/**
+assets/**
+node_modules/**
+public/**
+static/**
+src/**
+files/**
+temp/**
