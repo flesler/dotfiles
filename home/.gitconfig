@@ -16,7 +16,7 @@
 	co = checkout
 	rev = checkout --
 	p = push
-	pf = push -f
+	pf = push --force-with-lease
 	pr = pull --rebase
 	pop = stash pop
 	br = branch
