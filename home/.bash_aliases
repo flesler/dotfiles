@@ -14,6 +14,7 @@ alias la='ls -a'
 alias pathlist='echo "$PATH" | tr ":" "\n"'
 # Base directory not specified so it's PWD by default but one can pass dirs or files as args after the word
 alias ff="grep -A1 -nrFH --exclude-dir={.git,node_modules} --include=*.{js,jade,css,styl,sql,sh,json} -e"
+alias notify='start cmd'
 
 # Node.js
 
@@ -41,6 +42,7 @@ done
 alias st='a && git stash'
 alias stpll='st && pr && pop'
 alias stpsh='st && pr && p && pop'
+alias rbm='_br_=$(git rev-parse --abbrev-ref HEAD) && git co master && pr && git co $_br_ && git rebase master'
 alias rbc='a && git rbc'
 alias misc='a && git cm "Modified $(git diff --name-only HEAD | grep -Eo ''[^/]+$'')" && p'
 alias last_commit='git log -1 --pretty=%B | clip'

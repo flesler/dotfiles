@@ -170,6 +170,7 @@ function n() {
 
 function nr() {
 	if [ ! -f "package.json" ]; then
+		1>2 echo "No package.json in this directory"
 		return
 	fi
 
@@ -180,8 +181,14 @@ function nr() {
 }
 
 # Returns the version of a dependency even if nested
-# USAGE:
-#	$ kl "/node"
 function npmv() {
 	find . -path "*/$1/package.json" | xargs grep -H version | sed -E 's/package.json|"version": "|",//g'
 }
+
+# Sends a notification after a long running job finishes
+function remind(){
+    start=$(date +%s)
+    "$@"
+    [ $(($(date +%s) - start)) -le 10 ] || notify-send "$ $(echo $@)" "\nTook $(($(date +%s) - start))s to finish"
+}
+
