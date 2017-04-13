@@ -35,7 +35,7 @@ alias repl='winpty node'
 # Git
 
 # Bring these aliases from .gitconfig to global scope
-for k in s d a undo rev am discard p pf pr pop rba rbm lg; do
+for k in s d a undo rev discard p pf pr pop rba rbm lg; do
 	alias $k="git $k"
 done
 
@@ -46,6 +46,9 @@ alias rbm='_br_=$(git rev-parse --abbrev-ref HEAD) && git co master && pr && git
 alias rbc='a && git rbc'
 alias misc='a && git cm "Modified $(git diff --name-only HEAD | grep -Eo ''[^/]+$'')" && p'
 alias last_commit='git log -1 --pretty=%B | clip'
+alias set_upstream='git branch --set-upstream-to=origin/$(git rev-parse --abbrev-ref HEAD) $(git rev-parse --abbrev-ref HEAD)'
+alias am='a && git am'
+alias amne='a && git amne'
 
 # Internet
 
