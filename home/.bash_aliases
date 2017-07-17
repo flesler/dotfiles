@@ -46,8 +46,10 @@ alias rbm='_br_=$(git rev-parse --abbrev-ref HEAD) && git co master && pr && git
 alias rbc='a && git rbc'
 alias misc='a && git cm "Modified $(git diff --name-only HEAD | grep -Eo ''[^/]+$'')" && p'
 alias last_commit='git log -1 --pretty=%B | clip'
+alias first_foreign_commit="git log --pretty=format:'%h %an' | grep -vi flesler | head -n1 | cut -d' ' -f1"
+alias rbmine='git rebase -i $(first_foreign_commit)'
 alias set_upstream='git branch --set-upstream-to=origin/$(git rev-parse --abbrev-ref HEAD) $(git rev-parse --abbrev-ref HEAD)'
-alias am='a && git am'
+alias ame='a && git ame'
 alias amne='a && git amne'
 
 # Internet
@@ -55,6 +57,8 @@ alias amne='a && git amne'
 alias localip='ipconfig | grep -a IPv4 | tr " " "\n" | tail -n1'
 # Ping one of Google's DNS servers
 alias online='ping 8.8.8.8 -t'
+# Ping a domain to also check DNS resolution
+alias onlined='ping google.com -t'
 
 # Dotfiles
 

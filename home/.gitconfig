@@ -13,7 +13,7 @@
 	undo = reset --soft HEAD^
 	discard = reset --hard HEAD^
 	cm = commit -m
-	am = commit --amend
+	ame = commit --amend
 	amne = commit --amend --no-edit
 	co = checkout
 	rev = checkout --

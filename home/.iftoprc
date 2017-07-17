@@ -1,0 +1,8 @@
+interface: eth0
+dns-resolution: yes
+show-bars: no
+promiscuous: yes
+hide-source: yes
+use-bytes: no
+sort: 10s
+line-display: one-line-both
