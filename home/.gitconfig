@@ -5,7 +5,7 @@
   user = flesler
 [credential]
   # Remember credentials when cloning over HTTPS
-	helper = wincred
+  helper = wincred
 [alias]
 	s = status -s
 	d = diff
@@ -13,6 +13,7 @@
 	undo = reset --soft HEAD^
 	discard = reset --hard HEAD^
 	cm = commit -m
+	cma = commit -a
 	ame = commit --amend
 	amne = commit --amend --no-edit
 	co = checkout
@@ -25,6 +26,7 @@
 	rb = rebase
 	rbc = rebase --continue
 	rba = rebase --abort
+	rbi = rebase --interactive
 	rbm = rebase master
 	lg = log --graph --pretty=format:'%Cred%h%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'
 [core]
@@ -32,7 +34,6 @@
 	excludesfile = ~/.gitignore
 	autocrlf = false
 	quotepath = false
-	editor = vi
 	ignorecase = false
 [color]
 	# Use colors in Git commands that are capable of colored output when
@@ -43,11 +44,15 @@
 	default = current
 [pull]
 	rebase = true
+[rerere]
+	enabled = 1
 [diff]
 	# Detect copies as well as renames
 	renames = copies
-[rerere]
-	enabled = 1
 [help]
 	# Automatically correct and execute mistyped commands
 	autocorrect = 1
+[filter "lfs"]
+	smudge = git-lfs smudge -- %f
+	required = true
+	clean = git-lfs clean -- %f

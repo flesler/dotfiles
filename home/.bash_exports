@@ -1,11 +1,11 @@
 # Add `~/bin` to the `$PATH`
 export PATH="$HOME/bin:$PATH"
 
-# Delete dup entries from history
-export HISTCONTROL=erasedups
+# Delete dup entries from history and ignore dups and space-starting lines
+export HISTCONTROL=ignoreboth:erasedups
 
-# Flush commands to bash history right away
-export PROMPT_COMMAND='history -a'
+# Keep more entries in the bash history
+export HISTSIZE=3000
 
 # Set Sublime as Editor
 export EDITOR='subl -w'
