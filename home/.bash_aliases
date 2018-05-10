@@ -65,4 +65,11 @@ alias onlined='ping google.com -t'
 
 # Dotfiles
 
-alias dotfiles='sh -eui ~/dotfiles/install.sh && . ~/.bashrc'
+alias reload='source ~/.bashrc'
+alias dotfiles='sh -eui ~/dotfiles/install.sh && reload'
+
+# Other
+
+alias f='fzf --multi --select-1 --exit-0 --no-sort --cycle --no-mouse --reverse --bind "ctrl-o:execute-silent(code {}),ctrl-r:execute(rm -rf {})"'
+alias fc='f | clip'
+alias zz='z | sed -r "s/ +/ /g" | cut -d" " -f2 | fc'

@@ -2,7 +2,7 @@
 export PATH="$HOME/bin:$PATH"
 
 # Delete dup entries from history and ignore dups and space-starting lines
-export HISTCONTROL=ignoreboth:erasedups
+export HISTCONTROL=ignorespace:erasedups
 
 # Keep more entries in the bash history
 export HISTSIZE=3000
@@ -10,5 +10,13 @@ export HISTSIZE=3000
 # Set Sublime as Editor
 export EDITOR='subl -w'
 
+# Flush to history on every command
+if [[ "$PROMPT_COMMAND" != *"history -a"* ]]; then
+	export PROMPT_COMMAND="${PROMPT_COMMAND:+$PROMPT_COMMAND ;} history -a; "
+fi
+
 # Use less command as a pager
 export PAGER=less
+
+# Default command for fzf (filter alias)
+export FZF_DEFAULT_COMMAND='find . ! -path "*.git*" ! -path "*node_modules*"'
