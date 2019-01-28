@@ -20,3 +20,8 @@ export PAGER=less
 
 # Default command for fzf (filter alias)
 export FZF_DEFAULT_COMMAND='find . ! -path "*.git*" ! -path "*node_modules*"'
+
+# Bat tool configuration
+export BAT_PAGER=
+export BAT_THEME="Monokai Extended Bright"
+export BAT_TABS=2
