@@ -8,7 +8,7 @@ export HISTCONTROL=ignorespace:erasedups
 export HISTSIZE=3000
 
 # Set Sublime as Editor
-export EDITOR='subl -w'
+export EDITOR='code -w'
 
 # Flush to history on every command
 if [[ "$PROMPT_COMMAND" != *"history -a"* ]]; then
