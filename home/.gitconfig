@@ -5,7 +5,7 @@
   user = flesler
 [credential]
   # Remember credentials when cloning over HTTPS
-  helper = wincred
+  # helper = wincred
 [alias]
 	s = status -s
 	d = diff
@@ -44,6 +44,7 @@
 	default = current
 [pull]
 	rebase = true
+	autoStash = true
 [rerere]
 	enabled = 1
 [diff]
@@ -52,6 +53,8 @@
 [help]
 	# Automatically correct and execute mistyped commands
 	autocorrect = 1
+[stash]
+	showPatch = true
 [filter "lfs"]
 	smudge = git-lfs smudge -- %f
 	required = true

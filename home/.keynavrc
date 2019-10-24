@@ -1,0 +1,69 @@
+daemonize
+clear
+
+Tab restart
+#ctrl+semicolon start
+#ctrl+space start
+Escape end
+#ctrl+bracketleft end
+#q record ~/.keynav_macros
+#shift+at playback
+#a history-back
+#h cut-left
+#j cut-down
+#k cut-up
+#l cut-right
+
+#shift+h move-left
+#shift+j move-down
+#shift+k move-up
+#shift+l move-right
+space warp,click 1,end
+Return warp,click 1,end
+#semicolon warp,end
+#w warp
+#t windowzoom
+#c cursorzoom 300 300
+#e end
+#1 click 1
+#2 click 2
+#3 click 3
+#ctrl+h cut-left
+#ctrl+j cut-down
+#ctrl+k cut-up
+#ctrl+l cut-right
+#y cut-left,cut-up
+#u cut-right,cut-up
+#b cut-left,cut-down
+#n cut-right,cut-down
+#shift+y move-left,move-up
+#shift+u move-right,move-up
+#shift+b move-left,move-down
+#shift+n move-right,move-down
+#ctrl+y cut-left,cut-up
+#ctrl+u cut-right,cut-up
+#ctrl+b cut-left,cut-down
+#ctrl+n cut-right,cut-down
+#ctrl+v sh "xdotool key shift+Insert",end
+
+### Example using a 3x3 grid
+ctrl+KP_5 start, grid 3x3
+KP_7 cell-select 1x1, warp
+KP_8 cell-select 2x1, warp
+KP_9 cell-select 3x1, warp
+KP_4 cell-select 1x2, warp
+KP_6 cell-select 3x2, warp
+KP_1 cell-select 1x3, warp
+KP_2 cell-select 2x3, warp
+KP_3 cell-select 3x3, warp
+
+ctrl+KP_7 move-left, move-up, warp
+ctrl+KP_8 move-up, warp
+ctrl+KP_9 move-right, move-up, warp
+ctrl+KP_4 move-left, warp
+ctrl+KP_6 move-right, warp
+ctrl+KP_1 move-left,move-down, warp
+ctrl+KP_2 move-down, warp
+ctrl+KP_3 move-right,move-down, warp
+
+KP_5 warp,click 1,end

@@ -54,7 +54,7 @@ alias rbmine='git rebase -i $(first_foreign_commit)'
 alias set_upstream='git branch --set-upstream-to=origin/$(git rev-parse --abbrev-ref HEAD) $(git rev-parse --abbrev-ref HEAD)'
 alias ame='a && git ame'
 alias amne='a && git amne'
-alias gc_commits='git reflog expire --expire=now --all; git gc --prune=now'
+alias git_gc='git fetch --prune && git reflog expire --expire=now --all && git gc --prune=now'
 
 # Internet
 
