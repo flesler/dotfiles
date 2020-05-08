@@ -1,6 +1,7 @@
 [user]
 	name = Ariel Flesler
 	email = aflesler@gmail.com
+	signingkey = B56BB2FD099B63A7
 [github]
   user = flesler
 [credential]
@@ -9,15 +10,18 @@
 [alias]
 	s = status -s
 	d = diff
+	dw = diff --word-diff
 	a = add -A
-	undo = reset --soft HEAD^
-	discard = reset --hard HEAD^
 	cm = commit -m
-	cma = commit -a
-	ame = commit --amend
-	amne = commit --amend --no-edit
+	cma = commit -am
+	ame = commit --amend --allow-empty
+	amne = commit --amend --no-edit --allow-empty
 	co = checkout
-	rev = checkout --
+	com = checkout master
+	# rev = checkout --
+	rsh = reset --soft HEAD^
+	# rh- = reset --hard HEAD^
+	rhh = reset --hard HEAD
 	p = push
 	pf = push --force-with-lease
 	pr = pull --rebase
@@ -28,7 +32,13 @@
 	rba = rebase --abort
 	rbi = rebase --interactive
 	rbm = rebase master
-	lg = log --graph --pretty=format:'%Cred%h%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'
+	head = log -n1
+	lg = log --graph --pretty=format:'%Cred%h%Creset %C(yellow)%G?%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'
+	# recap = log --all --no-merges --author $(git config user.email) --graph --pretty=format:'%Cred%h%Creset %C(yellow)%G?%Creset %s %Cgreen(%cr)'
+	recap = log --all --no-merges --author aflesler@gmail.com --graph --pretty=format:'%Cred%h%Creset %C(yellow)%G?%Creset %s %Cgreen(%cr)'
+	# fixup = "!f() { TARGET=$(git rev-parse "$1"); git commit --fixup=$TARGET ${@:2} && EDITOR=true git rebase -i --autostash --autosquash $TARGET^; }; f"
+	fixup = "!f() { TARGET=$(git rev-parse \"$1\"); git commit --fixup=$TARGET && GIT_EDITOR=true git rebase --interactive --autosquash $TARGET~; }; f"
+
 [core]
 	# Use custom `.gitignore`
 	excludesfile = ~/.gitignore
@@ -59,3 +69,5 @@
 	smudge = git-lfs smudge -- %f
 	required = true
 	clean = git-lfs clean -- %f
+[commit]
+	gpgsign = true

@@ -17,16 +17,18 @@ function winpath() {
 	done
 }
 
-# Opens a path or the current directory using Windows Explorer
+# Opens a path or the current directory using the default opener
 # USAGE:
 #	$ e
 #	$ e ~/etc
 function e() {
-	if [ -z "$1" ] ; then
-		explorer .
-	else
-		explorer $(winpath "$1")
-	fi
+	#if [ -z "$1" ] ; then
+	#	explorer .
+	#else
+	#	explorer $(winpath "$1")
+	#fi
+	# Linux version
+	xdg-open "${1:-.}"
 }
 
 # Pipes stdin into an editor (defaults to $EDITOR or vi)
@@ -38,6 +40,17 @@ function viewstdin() {
 	tmp=/tmp/${RANDOM}${RANDOM}
 
 	cat >$tmp && $cmd $tmp && rm $tmp
+}
+
+# For Linux
+function clip() {
+	# Copy alias, copy to both clipboards
+	if [ "$#" == 0 ]; then
+		xclip
+		xclip -o | xclip -sel clip
+	else
+		xclip $*
+	fi
 }
 
 # Take all arguments as a command, execute it and copy to clipboard
@@ -52,18 +65,6 @@ function c() {
 	else
 		sh -c "$*" | head -c-1 | clip
 	fi
-}
-
-# Kills all processes that match a filter on ps -s
-# USAGE:
-#	$ kl "/node"
-function kl() {
-	ps -s |\
-		grep $1 |\
-		sed -r 's/ *([0-9]+) .*/\1/' |\
-		while read pid
-			do kill -9 $pid
-		done
 }
 
 # Alias for --help | less
@@ -99,7 +100,7 @@ function rc() {
 
 # Commits all files with the provided message and copies it to clipboard
 function cm() {
-	git add -A && git commit -m "$*" && echo "$*" | clip
+	git add -A && git commit -m "$@" && echo "$1" | clip
 }
 
 # IO
@@ -189,6 +190,5 @@ function npmv() {
 function remind(){
     start=$(date +%s)
     "$@"
-    [ $(($(date +%s) - start)) -le 10 ] || notify-send "$ $(echo $@)" "\nTook $(($(date +%s) - start))s to finish"
+    notify-send "$ $(echo $@)" "\nTook $(($(date +%s) - start))s to finish"
 }
-
