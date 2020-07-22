@@ -32,7 +32,7 @@ alias repl='winpty node'
 # Git
 
 # Bring these aliases from .gitconfig to global scope
-for k in s d dw a cma p pf pr pop rba rbi lg rhh rsh; do
+for k in s d dw a cma p pf pr pop rba rbi lg rhh rsh stu rh1; do
 	alias $k="git $k"
 done
 
@@ -52,7 +52,7 @@ alias last_commit='git log -1 --pretty=%B | clip'
 alias first_foreign_commit='git rev-list --boundary ...master | grep "^-" | cut -c2- | tail -n1'
 alias rbmine='git rebase -i $(first_foreign_commit)'
 alias set_upstream='git branch --set-upstream-to=origin/$(git rev-parse --abbrev-ref HEAD) $(git rev-parse --abbrev-ref HEAD)'
-alias git_gc='git fetch --prune && git fsck --unreachable && git reflog expire --expire=now --all && git gc --prune=now'
+alias git_gc='git fetch --prune && git fsck --unreachable && git reflog expire --expire=now --all && git gc --prune=now --aggressive'
 alias git_delete_other_branches="git fetch -p && git branch | grep -ve '*' -e master | xargs git branch -d" # --force
 
 # Internet

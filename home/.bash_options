@@ -4,8 +4,12 @@ shopt -s nocaseglob
 # Append to the Bash history file, rather than overwriting it
 shopt -s histappend
 
-# Autocorrect typos in path names when using `cd`
-shopt -s cdspell
+# Prepend cd to directory names automatically
+shopt -s autocd 2> /dev/null
+# Correct spelling errors during tab-completion
+shopt -s dirspell 2> /dev/null
+# Correct spelling errors in arguments supplied to cd
+shopt -s cdspell 2> /dev/null
 
 # Be more intelligent when autocompleting by also looking at the text after
 # the cursor. For example, when the current line is "cd ~/src/mozil", and
@@ -14,8 +18,24 @@ shopt -s cdspell
 # Readline used by Bash 4.)
 set skip-completed-text on
 
-# Recursive cd **/dir
-#shopt -s autocd
-
 # Recursive globbing
-#shopt -s globstar
+shopt -s globstar
+
+# check the window size after each command and, if necessary,
+# update the values of LINES and COLUMNS.
+shopt -s checkwinsize
+
+# Perform file completion in a case insensitive fashion
+bind "set completion-ignore-case on"
+
+# Display matches for ambiguous patterns at first tab press
+bind "set show-all-if-ambiguous on"
+
+# Save multi-line commands as one command
+shopt -s cmdhist
+
+# Avoid duplicate entries
+export HISTCONTROL="erasedups:ignoreboth"
+
+# Don't record some commands
+export HISTIGNORE="&:[ ]*:exit:ls:bg:fg:history:cd:p:e:clear:cm:cmnv:st:pop"

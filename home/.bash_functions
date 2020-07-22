@@ -103,6 +103,11 @@ function cm() {
 	git add -A && git commit -m "$@" && echo "$1" | clip
 }
 
+# Stashes unstaged files, commits and restores the files
+function cms() {
+  git stash save --keep-index && cm "$@" ; git stash pop
+}
+
 # IO
 
 # Copies all arguments to the pendrive as a single gzipped tar
@@ -191,4 +196,16 @@ function remind(){
     start=$(date +%s)
     "$@"
     notify-send "$ $(echo $@)" "\nTook $(($(date +%s) - start))s to finish"
+}
+
+# Remove entries matching $1 from the bash history
+function forget() {
+  if [ "$1" != "" ]; then
+    file=~/.bash_history
+    before=$(cat $file | wc -l)
+    sed -ni "/$1/!p" $file
+    history -r
+    after=$(cat $file | wc -l)
+    echo "Trimmed $file, lines: $before -> $after"
+  fi
 }
