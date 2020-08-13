@@ -198,14 +198,19 @@ function remind(){
     notify-send "$ $(echo $@)" "\nTook $(($(date +%s) - start))s to finish"
 }
 
-# Remove entries matching $1 from the bash history
+# Remove entries matching $1 from the bash history, also remove duplicates
 function forget() {
   if [ "$1" != "" ]; then
     file=~/.bash_history
     before=$(cat $file | wc -l)
-    sed -ni "/$1/!p" $file
+    cat $file | sed -n "/$1/!p" | awk '!a[$0]++' > t && mv t $file
     history -r
     after=$(cat $file | wc -l)
     echo "Trimmed $file, lines: $before -> $after"
   fi
+}
+
+# Use Node as a calculator
+function calc() {
+	node -pe "with(Math) { $* }"
 }

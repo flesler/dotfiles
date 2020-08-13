@@ -32,7 +32,7 @@ alias repl='winpty node'
 # Git
 
 # Bring these aliases from .gitconfig to global scope
-for k in s d dw a cma p pf pr pop rba rbi lg rhh rsh stu rh1; do
+for k in s d dw a cma p pf pr pop rba rbi lg rhh rsh stu rh1 l1 br bm stl stc bd dm cob; do
 	alias $k="git $k"
 done
 
@@ -68,6 +68,7 @@ alias onlined='ping google.com'
 # Add an "alert" alias for long running commands.  Use like so: sleep 10; alert
 alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
 alias sai='sudo apt install -y'
+alias sau='sudo apt update -y && sudo apt upgrade -y'
 
 # Dotfiles
 

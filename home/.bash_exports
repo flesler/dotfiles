@@ -1,8 +1,11 @@
 # Add `~/bin` to the `$PATH`
 export PATH="$HOME/bin:$PATH"
 
-# Delete dup entries from history and ignore dups and space-starting lines
-export HISTCONTROL=ignorespace:erasedups
+# Avoid duplicate entries
+export HISTCONTROL="erasedups:ignoreboth"
+
+# Don't record some commands
+export HISTIGNORE="&:[ ]*:exit:ls:bg:fg:history:cd:p:e:clear:cm:cmnv:st:pop:z"
 
 # Keep more entries in the bash history
 export HISTSIZE=3000

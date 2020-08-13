@@ -34,8 +34,16 @@ bind "set show-all-if-ambiguous on"
 # Save multi-line commands as one command
 shopt -s cmdhist
 
-# Avoid duplicate entries
-export HISTCONTROL="erasedups:ignoreboth"
+# Since ctrl-v is used, add Ctrl+P to print a keycode
+bind '"\C-p":quoted-insert'
 
-# Don't record some commands
-export HISTIGNORE="&:[ ]*:exit:ls:bg:fg:history:cd:p:e:clear:cm:cmnv:st:pop"
+# Key bindings, up/down arrow searches through history
+bind '"\e[A": history-search-backward'
+bind '"\e[B": history-search-forward'
+bind '"\eOA": history-search-backward'
+bind '"\eOB": history-search-forward'
+
+# Page up for reverse history search
+bind '"\e[5~": reverse-search-history'
+# Page down to Cycle thru auto-completions
+bind '"\e[6~": menu-complete'
