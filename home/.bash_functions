@@ -203,7 +203,9 @@ function forget() {
   if [ "$1" != "" ]; then
     file=~/.bash_history
     before=$(cat $file | wc -l)
-    cat $file | sed -n "/$1/!p" | awk '!a[$0]++' > t && mv t $file
+    tac $file | sed -n "/$1/!p" | awk '! seen[$0]++' | tac > t && mv t $file
+    #cat $file | sed -n "/$1/!p" | awk '!a[$0]++' | tac > t && mv t $file
+    history -c
     history -r
     after=$(cat $file | wc -l)
     echo "Trimmed $file, lines: $before -> $after"

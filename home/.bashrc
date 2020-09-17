@@ -89,3 +89,12 @@ fi
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+# Add git completion to the g alias
+if [ "$(type -t g)" == "alias" ]; then
+  # Force load the file that is otherwise loaded on demand
+  if [ "$(type -t __git_complete)" != "function" ]; then
+    . /usr/share/bash-completion/completions/git
+  fi
+  __git_complete g __git_main
+fi

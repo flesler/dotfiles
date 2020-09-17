@@ -11,22 +11,32 @@
 	s = status -s
 	d = diff
 	dw = diff --word-diff
+  dm = diff master..HEAD
 	a = add -A
 	cm = commit -m
 	cma = commit -am
+	cmnv = commit --no-verify -m
 	ame = commit --amend --allow-empty
 	amne = commit --amend --no-edit --allow-empty
 	co = checkout
 	com = checkout master
+	cob = checkout -b
 	# rev = checkout --
-	rsh = reset --soft HEAD^
+	rs1 = reset --soft HEAD^
 	# rh- = reset --hard HEAD^
 	rhh = reset --hard HEAD
+	rh1 = reset --hard HEAD^
 	p = push
 	pf = push --force-with-lease
 	pr = pull --rebase
+	st = stash
+	stu = stash save --keep-index
+  stl = stash list
+  stc = stash clear
 	pop = stash pop
-	br = branch
+	b = branch
+	bm = branch -m
+	bd = branch -D
 	rb = rebase
 	rbc = rebase --continue
 	rba = rebase --abort
@@ -34,10 +44,8 @@
 	rbm = rebase master
 	head = log -n1
 	lg = log --graph --pretty=format:'%Cred%h%Creset %C(yellow)%G?%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'
-	# recap = log --all --no-merges --author $(git config user.email) --graph --pretty=format:'%Cred%h%Creset %C(yellow)%G?%Creset %s %Cgreen(%cr)'
-	recap = log --all --no-merges --author aflesler@gmail.com --graph --pretty=format:'%Cred%h%Creset %C(yellow)%G?%Creset %s %Cgreen(%cr)'
-	# fixup = "!f() { TARGET=$(git rev-parse "$1"); git commit --fixup=$TARGET ${@:2} && EDITOR=true git rebase -i --autostash --autosquash $TARGET^; }; f"
-	fixup = "!f() { TARGET=$(git rev-parse \"$1\"); git commit --fixup=$TARGET && GIT_EDITOR=true git rebase --interactive --autosquash $TARGET~; }; f"
+	l1 = log --no-merges --reverse -n 20 --author aflesler@gmail.com --pretty=format:'%s'
+	recap = log --all --no-merges --author aflesler@gmail.com --graph --pretty=format:'%Cgreen(%cr)%Creset %s'
 
 [core]
 	# Use custom `.gitignore`

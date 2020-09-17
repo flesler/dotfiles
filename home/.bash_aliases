@@ -11,8 +11,10 @@ alias zz='z -c'
 alias rr='rm -r'
 alias rrf='rr -f'
 alias mkp='mkdir -p'
-alias pathlist='echo "$PATH" | tr ":" "\n"'
-alias finddir='find . -type d -iname'
+alias path.list='echo "$PATH" | tr ":" "\n"'
+alias find.dir='find . -type d -iname'
+alias find.file='find . -type f -iname'
+alias restart='sudo shutdown -r now'
 
 # Node.js
 
@@ -25,14 +27,12 @@ alias r='npm run -s'
 # Convert an epoch with or without milliseconds to ISO string
 alias ts='node -pe "new Date(+(process.argv[1]+'\''000'\'').slice(0,13)).toISOString()" -- '
 
-# Git Bash aliases node to 'winpty node.exe' which is needed for repl but breaks piping
-unalias node &>/dev/null
-alias repl='winpty node'
-
 # Git
 
+alias g=git
+
 # Bring these aliases from .gitconfig to global scope
-for k in s d dw a cma p pf pr pop rba rbi lg rhh rsh stu rh1 l1 br bm stl stc bd dm cob; do
+for k in s d a p pf pr pop rba rbi lg rhh rh1 rs1 stu  stl stc l1; do
 	alias $k="git $k"
 done
 
@@ -62,15 +62,16 @@ alias localip='ipconfig | grep -a IPv4 | tr " " "\n" | tail -n1'
 alias online='ping 8.8.8.8'
 # Ping a domain to also check DNS resolution
 alias onlined='ping google.com'
+alias dns.blocked='tail -n99 -f /etc/dnscrypt-proxy/blocked.log | uniq -f 3'
+alias dns.queries='tail -n99 -f /etc/dnscrypt-proxy/query.log | uniq -f 6'
+alias dns.restart='sudo systemctl restart dnscrypt-proxy.service'
+alias dns.whitelist='code /etc/dnscrypt-proxy/domain-whitelist.txt --wait && dns.restart'
 
 # Other
 
-# Add an "alert" alias for long running commands.  Use like so: sleep 10; alert
+# Add an "alert" alias for long running commands. Use like so: sleep 10; alert
 alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
 alias sai='sudo apt install -y'
 alias sau='sudo apt update -y && sudo apt upgrade -y'
-
-# Dotfiles
-
 alias reload='source ~/.bashrc'
-alias dotfiles='sh -eui ~/dotfiles/install.sh && reload'
+alias dotfiles.sync='find ~ -maxdepth 1 -type f -mtime -1 | grep -e git -e bash | parallel cp {} /media/flesler/Data/Backup/Home/dotfiles/home'
