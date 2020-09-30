@@ -216,3 +216,9 @@ function forget() {
 function calc() {
 	node -pe "with(Math) { $* }"
 }
+
+function sd() {
+  line="sudo $(tail -n1 ~/.bash_history)"
+  echo $line
+  $line
+}
