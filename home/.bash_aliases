@@ -14,6 +14,7 @@ alias mkp='mkdir -p'
 alias path.list='echo "$PATH" | tr ":" "\n"'
 alias find.dir='find . -type d -iname'
 alias find.file='find . -type f -iname'
+alias find.inside='grep --exclude-dir={node_modules,.git} -Irlw . -e'
 alias restart='sudo shutdown -r now'
 
 # Node.js
@@ -32,7 +33,7 @@ alias ts='node -pe "new Date(+(process.argv[1]+'\''000'\'').slice(0,13)).toISOSt
 alias g=git
 
 # Bring these aliases from .gitconfig to global scope
-for k in s d a p pf pr pop rba rbi lg rhh rh1 rs1 stu  stl stc l1; do
+for k in s d a p pf pr pop rba rbi lg rhh rh1 rs1 stu stl stc l1 bb; do
 	alias $k="git $k"
 done
 
@@ -74,4 +75,4 @@ alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo
 alias sai='sudo apt install -y'
 alias sau='sudo apt update -y && sudo apt upgrade -y'
 alias reload='source ~/.bashrc'
-alias dotfiles.sync='find ~ -maxdepth 1 -type f -mtime -1 | grep -e git -e bash | parallel cp {} /media/flesler/Data/Backup/Home/dotfiles/home'
+alias dotfiles.sync='find ~ -maxdepth 1 -type f -mtime -1 | grep -e git -e bash | grep -v history | parallel cp {} /media/flesler/Data/Backup/Home/dotfiles/home'

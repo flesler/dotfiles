@@ -108,6 +108,11 @@ function cms() {
   git stash save --keep-index && cm "$@" ; git stash pop
 }
 
+# Commits, rebases master and pushes
+function cmrp() {
+  cm "$@" && rbm && git push -f
+}
+
 # IO
 
 # Copies all arguments to the pendrive as a single gzipped tar
@@ -217,8 +222,36 @@ function calc() {
 	node -pe "with(Math) { $* }"
 }
 
+# Re run the last line with sudo (same as sudo !!)
 function sd() {
   line="sudo $(tail -n1 ~/.bash_history)"
   echo $line
   $line
+}
+
+# Archive file and/or dirs with tar+gzip
+function archive() {
+  dest=${1//\//}
+  # --exclude-vcs
+  tar -ac --exclude=node_modules -f "$dest.tar.gz" "$@"
+}
+
+# Archive and then delete
+function archived() {
+  archive "$@"
+  rm -r "$@"
+}
+
+# Recompresses a bz2 or xz to gz, without deleting the original
+function unarchive() {
+  dest=${1/.tar*/}
+  mkdir -p "$dest"
+  tar -xaf "$1" -C . # "$dest"
+}
+
+function find.replace() {
+	search=$1
+	replace=$2
+	grep --exclude-dir={node_modules,.git} -Irlw . -e "$search" |\
+		xargs sed -i "s;$search;$replace;g"
 }
