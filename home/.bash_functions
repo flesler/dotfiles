@@ -46,7 +46,7 @@ function viewstdin() {
 function clip() {
 	# Copy alias, copy to both clipboards
 	if [ "$#" == 0 ]; then
-		xclip
+		xclip -r
 		xclip -o | xclip -sel clip
 	else
 		xclip $*
@@ -208,7 +208,8 @@ function forget() {
   if [ "$1" != "" ]; then
     file=~/.bash_history
     before=$(cat $file | wc -l)
-    tac $file | sed -n "/$1/!p" | awk '! seen[$0]++' | tac > t && mv t $file
+    tac $file | grep -ve cmnv -e 'cm ' -e 'cd ' -e 'z ' | sed -r 's/ +$//g' \
+      | sed -n "/$1/!p" | awk '! seen[$0]++' | tac > /tmp/t && mv /tmp/t $file
     #cat $file | sed -n "/$1/!p" | awk '!a[$0]++' | tac > t && mv t $file
     history -c
     history -r

@@ -12,9 +12,11 @@ alias rr='rm -r'
 alias rrf='rr -f'
 alias mkp='mkdir -p'
 alias path.list='echo "$PATH" | tr ":" "\n"'
+alias hg='history | grep'
 alias find.dir='find . -type d -iname'
 alias find.file='find . -type f -iname'
 alias find.inside='grep --exclude-dir={node_modules,.git} -Irlw . -e'
+alias find.gzip='find . -iname '''*.gz''' | sort | xargs gzip -dc | grep -Eie'
 alias restart='sudo shutdown -r now'
 
 # Node.js
@@ -25,8 +27,11 @@ alias n10='nvm run v10.16.3'
 alias n12='nvm run v12.16.1'
 alias prod='NODE_ENV=production'
 alias r='npm run -s'
+alias ni='npm install'
+alias nid='npm install -D'
+alias nrm='npm rm'
 # Convert an epoch with or without milliseconds to ISO string
-alias ts='node -pe "new Date(+(process.argv[1]+'\''000'\'').slice(0,13)).toISOString()" -- '
+alias ts='node -pe "process.argv[1] ? new Date(+(process.argv[1]+'\''000'\'').slice(0,13)).toISOString() : Date.now()" -- '
 
 # Git
 
@@ -46,6 +51,7 @@ alias stpsh='st && pr && p && pop'
 # alias rbm='_br_=$(git rev-parse --abbrev-ref HEAD) && git co master && pr && git co $_br_ && git rebase master'
 # alias rbm='git fetch -p && git rebase origin/master'
 alias rbm='git com && pr && git co - && git rbm'
+alias rbd='git co dev && pr && git co - && git rb dev'
 alias rbbranch='git rebase -i $(git merge-base $(git rev-parse --abbrev-ref HEAD) master)'
 alias misc='a && git cm "Modified $(git diff --name-only HEAD | grep -Eo ''[^/]+$'')" && p'
 alias last_commit='git log -1 --pretty=%B | clip'
@@ -54,7 +60,7 @@ alias first_foreign_commit='git rev-list --boundary ...master | grep "^-" | cut 
 alias rbmine='git rebase -i $(first_foreign_commit)'
 alias set_upstream='git branch --set-upstream-to=origin/$(git rev-parse --abbrev-ref HEAD) $(git rev-parse --abbrev-ref HEAD)'
 alias git_gc='git fetch --prune && git fsck --unreachable && git reflog expire --expire=now --all && git gc --prune=now --aggressive'
-alias git_delete_other_branches="git fetch -p && git branch | grep -ve '*' -e master | xargs git branch -d" # --force
+alias git_delete_other_branches="git fetch -p && git branch | grep -ve '*' -e master -e main -e dev -e stg -e prod | xargs git branch -d" # --force
 
 # Internet
 
@@ -67,6 +73,7 @@ alias dns.blocked='tail -n99 -f /etc/dnscrypt-proxy/blocked.log | uniq -f 3'
 alias dns.queries='tail -n99 -f /etc/dnscrypt-proxy/query.log | uniq -f 6'
 alias dns.restart='sudo systemctl restart dnscrypt-proxy.service'
 alias dns.whitelist='code /etc/dnscrypt-proxy/domain-whitelist.txt --wait && dns.restart'
+alias dns.clear='for f in /etc/dnscrypt-proxy/*.log; do echo "" | sudo tee "$f"; done'
 
 # Other
 
