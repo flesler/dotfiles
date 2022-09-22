@@ -46,11 +46,17 @@ $BORG create       \
   --exclude '**/logs' \
   --exclude '**/node_modules' \
   --exclude '**/tmp' \
+  --exclude '**/*Cache*/**' \
+  --exclude '**/*cache*/**' \
   --exclude '*.deb' \
   --exclude '*.log' \
+  --exclude '/home/*/bin/Ledger_Live.AppImage' \
+  --exclude '/home/*/bin/graphql' \
   --exclude '/home/*/.ccache' \
   --exclude '/home/*/.config/Code/*Cache*' \
+  --exclude '/home/*/.config/Code/User' \
   --exclude '/home/*/.config/chromium' \
+  --exclude '/home/*/.config/GraphQL*' \
   --exclude '/home/*/.local' \
   --exclude '/home/*/.node-gyp' \
   --exclude '/home/*/.npm/_cacache' \
@@ -67,13 +73,17 @@ $BORG create       \
   --exclude '/home/*/Videos' \
   --exclude '/home/*/lost+found' \
   --exclude '/home/*/snap' \
+  --exclude '/home/*/miniconda3' \
   --exclude '/var/crash' \
   --exclude '/var/lock' \
   --exclude '/var/run' \
   --exclude '/var/spool' \
   --exclude '/var/lib/docker' \
   --exclude '/var/lib/flatpak' \
+  --exclude '/var/lib/apt' \
   --exclude '/var/lib/snapd' \
+  --exclude '/var/lib/dpkg' \
+  --exclude '/var/backups' \
   --exclude '/root/.config/borg' \
                   \
   $BORG_REPO::"$PREFIX{now:%Y-%m-%dT%H:%M:%S}" \
