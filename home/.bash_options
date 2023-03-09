@@ -47,3 +47,8 @@ bind '"\eOB": history-search-forward'
 bind '"\e[5~": reverse-search-history'
 # Page down to Cycle thru auto-completions
 bind '"\e[6~": menu-complete'
+
+# Map Menu to grave/tilde (broken in keyboard)
+xmodmap -e "keycode 135 = grave asciitilde grave asciitilde"
+# Unmap grave/tilde so it stops typing
+xmodmap -e "keycode 49 ="
