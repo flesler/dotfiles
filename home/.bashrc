@@ -100,14 +100,14 @@ if [ "$(type -t g)" == "alias" ]; then
 fi
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/home/flesler/miniconda3/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
+__conda_setup="$('/media/flesler/Extra/Programs/miniconda3/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
 if [ $? -eq 0 ]; then
     eval "$__conda_setup"
 else
-    if [ -f "/home/flesler/miniconda3/etc/profile.d/conda.sh" ]; then
-        . "/home/flesler/miniconda3/etc/profile.d/conda.sh"
+    if [ -f "/media/flesler/Extra/Programs/miniconda3/etc/profile.d/conda.sh" ]; then
+        . "/media/flesler/Extra/Programs/miniconda3/etc/profile.d/conda.sh"
     else
-        export PATH="/home/flesler/miniconda3/bin:$PATH"
+        export PATH="/media/flesler/Extra/Programs/miniconda3/bin:$PATH"
     fi
 fi
 unset __conda_setup

@@ -84,7 +84,7 @@ function h() {
 function rc() {
 	name=${1:-bash}
 	editor=${EDITOR:-vi}
-	for file in "$name" ".$name" ".${name}rc" ".bash_$name"; do
+	for file in "$name" ".$name" ".${name}rc" ".bash_$name" ".bash_${name}s" ".bash_${name}es"; do
 		path="$HOME/$file"
 		if [ -f "$path" ]; then
 			echo "editing $file"
@@ -101,16 +101,6 @@ function rc() {
 # Commits all files with the provided message and copies it to clipboard
 function cm() {
 	git add -A && git commit -m "$@" && echo "$1" | clip
-}
-
-# Stashes unstaged files, commits and restores the files
-function cms() {
-  git stash save --keep-index && cm "$@" ; git stash pop
-}
-
-# Commits, rebases master and pushes
-function cmrp() {
-  cm "$@" && rbm && git push -f
 }
 
 # IO
@@ -198,9 +188,16 @@ function npmv() {
 
 # Sends a notification after a long running job finishes
 function remind(){
-    start=$(date +%s)
-    "$@"
-    notify-send "$ $(echo $@)" "\nTook $(($(date +%s) - start))s to finish"
+  start=$(date +%s)
+  "$@"
+  notify-send "$ $(echo $@)" "\nTook $(($(date +%s) - start))s to finish"
+}
+
+# mv command but it backups
+function mvb() {
+  from=$1
+  to=$2
+  mv $to $to.bkp && mv $from $to
 }
 
 # Remove entries matching $1 from the bash history, also remove duplicates
@@ -208,8 +205,9 @@ function forget() {
   if [ "$1" != "" ]; then
     file=~/.bash_history
     before=$(cat $file | wc -l)
-    tac $file | grep -ve cmnv -e 'cm ' -e 'cd ' -e 'z ' | sed -r 's/ +$//g' \
-      | sed -n "/$1/!p" | awk '! seen[$0]++' | tac > /tmp/t && mv /tmp/t $file
+    tac $file | grep -ve cmnv -e 'cm ' -e 'cd ' -e 'z ' -e 'cob ' -e 'MFD-' | sed -r 's/ +$//g' \
+      | sed -n "/$1/!p" | awk '! seen[$0]++' | tac > /tmp/t && \
+      mvb /tmp/t $file
     #cat $file | sed -n "/$1/!p" | awk '!a[$0]++' | tac > t && mv t $file
     history -c
     history -r
@@ -233,8 +231,7 @@ function sd() {
 # Archive file and/or dirs with tar+gzip
 function archive() {
   dest=${1//\//}
-  # --exclude-vcs
-  tar -ac --exclude=node_modules -f "$dest.tar.gz" "$@"
+  tar -ac --exclude=node_modules --exclude-vcs -f "$dest.tar.gz" "$@"
 }
 
 # Archive and then delete
@@ -255,4 +252,50 @@ function find.replace() {
 	replace=$2
 	grep --exclude-dir={node_modules,.git} -Irlw . -e "$search" |\
 		xargs sed -i "s;$search;$replace;g"
+}
+
+# Download a youtube video at 1080p to /tmp
+function dlyt() {
+  pref="https://www.youtube.com/watch?v="
+  id=$(echo ${1/$pref/} | sed -r 's/&.+//')
+  echo "Video ID is $id"
+  formats=$(youtube-dl --list-formats "$pref$id")
+  line=$(echo "$formats" | grep -e x1080 -e x1280 | head -n1 | sed -r 's/  +/ /g')
+  if [[ "$line" == "" ]]; then
+    echo "No valid format found"
+    echo "$formats"
+    return
+  fi
+  echo "Line is $line"
+  ext=$(echo "$line" | cut -d' ' -f2)
+  echo "Extension is $ext"
+  format=$(echo "$line" | cut -d' ' -f1)
+  echo "Format is $format"
+  url=$(youtube-dl --format $format --get-url "$pref$id")
+  out="/tmp/$id.$ext"
+  echo "URL is $url"
+  echo "Downloading to $out..."
+  wget "$url" -O $out
+}
+
+function watermark() {
+  src_dir="${1:-.}"
+  gravity="${2:-south-east}"
+  dest_dir="$src_dir/${3:-watermarked}"
+  mkdir -p "$dest_dir"
+  find "$src_dir" -maxdepth 1 -type f | while read f; do
+    img_width=$(identify -format "%w" "$f")
+    dest="$dest_dir/$(basename """$f""")"
+    width=$((img_width/3))
+    margin=$((img_width/50))
+    composite -gravity $gravity -dissolve 75% -geometry "${width}x+${margin}+${margin}" ~/Pictures/Watermarks/1.png "$f" "$dest"
+    echo "Watermarked $f into $dest"
+  done
+}
+
+# See the diff of $from..$to
+function git_diff() {
+  from=${1:-1}
+  to=${2:-$(($from - 1))}
+  git diff HEAD~$from..HEAD~$to
 }
