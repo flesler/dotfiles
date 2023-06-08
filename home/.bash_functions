@@ -195,9 +195,8 @@ function remind(){
 
 # mv command but it backups
 function mvb() {
-  from=$1
   to=$2
-  mv $to $to.bkp && mv $from $to
+  mv $to $to.bkp && mv $@
 }
 
 # Remove entries matching $1 from the bash history, also remove duplicates
@@ -205,10 +204,8 @@ function forget() {
   if [ "$1" != "" ]; then
     file=~/.bash_history
     before=$(cat $file | wc -l)
-    tac $file | grep -ve cmnv -e 'cm ' -e 'cd ' -e 'z ' -e 'cob ' -e 'MFD-' | sed -r 's/ +$//g' \
-      | sed -n "/$1/!p" | awk '! seen[$0]++' | tac > /tmp/t && \
-      mvb /tmp/t $file
-    #cat $file | sed -n "/$1/!p" | awk '!a[$0]++' | tac > t && mv t $file
+    tac $file | grep -ve cmnv -e 'cm ' -e 'cd ' -e 'z ' -e 'cob ' -e 'MFD-' -e ' cp ' -e 'rr ' -e 'rrf ' \
+      | sed -r 's/ +$//g' | sed -n "/$1/!p" | awk '! seen[$0]++' | tac > /tmp/t && mvb /tmp/t $file
     history -c
     history -r
     after=$(cat $file | wc -l)
@@ -256,11 +253,14 @@ function find.replace() {
 
 # Download a youtube video at 1080p to /tmp
 function dlyt() {
+  # bin=youtube-dl
+  bin=yt-dlp
   pref="https://www.youtube.com/watch?v="
   id=$(echo ${1/$pref/} | sed -r 's/&.+//')
   echo "Video ID is $id"
-  formats=$(youtube-dl --list-formats "$pref$id")
-  line=$(echo "$formats" | grep -e x1080 -e x1280 | head -n1 | sed -r 's/  +/ /g')
+  formats=$($bin --list-formats "$pref$id")
+  # line=$(echo "$formats" | grep -e x1080 -e x1280 | head -n1 | sed -r 's/  +/ /g')
+  line=$(echo "$formats" | grep -v "video only" | grep -e 1280x720 | head -n1 | sed -r 's/  +/ /g')
   if [[ "$line" == "" ]]; then
     echo "No valid format found"
     echo "$formats"
@@ -271,7 +271,7 @@ function dlyt() {
   echo "Extension is $ext"
   format=$(echo "$line" | cut -d' ' -f1)
   echo "Format is $format"
-  url=$(youtube-dl --format $format --get-url "$pref$id")
+  url=$($bin --format $format --get-url "$pref$id")
   out="/tmp/$id.$ext"
   echo "URL is $url"
   echo "Downloading to $out..."

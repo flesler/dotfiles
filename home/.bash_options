@@ -52,3 +52,5 @@ bind '"\e[6~": menu-complete'
 xmodmap -e "keycode 135 = grave asciitilde grave asciitilde"
 # Unmap grave/tilde so it stops typing
 xmodmap -e "keycode 49 ="
+# Which one is it!?
+xmodmap -e "keycode 96 ="
