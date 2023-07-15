@@ -50,12 +50,16 @@ $BORG create       \
   --exclude '**/*cache*/**' \
   --exclude '*.deb' \
   --exclude '*.log' \
-  --exclude '/home/*/bin/Ledger_Live.AppImage' \
+  --exclude '/home/*/bin/*.AppImage' \
   --exclude '/home/*/bin/graphql' \
   --exclude '/home/*/.ccache' \
   --exclude '/home/*/.config/Code/*Cache*' \
   --exclude '/home/*/.config/Code/User' \
   --exclude '/home/*/.config/chromium' \
+  --exclude '/home/*/.config/Ledger \Live' \
+  --exclude '/home/*/.config/Slack' \
+  --exclude '/home/*/.config/joplin-desktop' \
+  --exclude '/home/*/.config/VirtualBox' \
   --exclude '/home/*/.config/GraphQL*' \
   --exclude '/home/*/.local' \
   --exclude '/home/*/.node-gyp' \

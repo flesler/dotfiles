@@ -12,7 +12,7 @@ for f in $(find . -type f | grep -i -e .MP4 -e .MOV); do # -e .JPG -e .JPEG -e .
     fi
   fi
   dir=$root/$date
-  mkdir -p $dir
+  # mkdir -p $dir
   # Lower case extension
   filename=$(basename $f | sed -r 's/\.([A-Z0-9]{3,4})$/.\L\1/')
   dest=$dir/$filename
@@ -33,16 +33,16 @@ for f in $(find . -type f | grep -i -e .MP4 -e .MOV); do # -e .JPG -e .JPEG -e .
     else
       echo "Optimizing MOV $f to $dest"
       # ffmpeg -y -loglevel error -i "$f" -codec copy "$dest"
-      cp "$f" "$tmpfile"
-      ffmpeg -y -loglevel error -i "$tmpfile" -vcodec libx264 -crf 28 -preset faster -tune film "$dest"
+      # cp "$f" "$tmpfile"
+      # ffmpeg -y -loglevel error -i "$tmpfile" -vcodec libx264 -crf 28 -preset faster -tune film "$dest"
     fi
   elif [[ "$filename" = *".mp4" ]]; then
     echo "Optimizing MP4 $f to $dest"
-    cp "$f" "$tmpfile"
-    ffmpeg -y -loglevel error -i "$tmpfile" -vcodec libx264 -crf 28 -preset faster -tune film "$dest"
+    # cp "$f" "$tmpfile"
+    # ffmpeg -y -loglevel error -i "$tmpfile" -vcodec libx264 -crf 28 -preset faster -tune film "$dest"
   else
     echo "Copying $f to $dest"
     cp "$f" "$dest"
   fi
-  rm -f $tmpfile
+  # rm -f $tmpfile
 done

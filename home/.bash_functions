@@ -260,7 +260,8 @@ function dlyt() {
   echo "Video ID is $id"
   formats=$($bin --list-formats "$pref$id")
   # line=$(echo "$formats" | grep -e x1080 -e x1280 | head -n1 | sed -r 's/  +/ /g')
-  line=$(echo "$formats" | grep -v "video only" | grep -e 1280x720 | head -n1 | sed -r 's/  +/ /g')
+  # line=$(echo "$formats" | grep -v "video only" | grep -e 1280x720 | head -n1 | sed -r 's/  +/ /g')
+  line=$(echo "$formats" | grep -v "video only" | tail -n1 | sed -r 's/  +/ /g')
   if [[ "$line" == "" ]]; then
     echo "No valid format found"
     echo "$formats"
@@ -286,9 +287,9 @@ function watermark() {
   find "$src_dir" -maxdepth 1 -type f | while read f; do
     img_width=$(identify -format "%w" "$f")
     dest="$dest_dir/$(basename """$f""")"
-    width=$((img_width/3))
-    margin=$((img_width/50))
-    composite -gravity $gravity -dissolve 75% -geometry "${width}x+${margin}+${margin}" ~/Pictures/Watermarks/1.png "$f" "$dest"
+    width=$((img_width/4))
+    margin=$((img_width/100))
+    composite -gravity $gravity -dissolve 40% -geometry "${width}x+${margin}+${margin}" ~/Pictures/Watermarks/1.png "$f" "$dest"
     echo "Watermarked $f into $dest"
   done
 }
