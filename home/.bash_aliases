@@ -90,3 +90,5 @@ alias sai='sudo apt install -y'
 alias sau='sudo apt update -y && sudo apt upgrade -y'
 alias reload='source ~/.bashrc'
 alias dotfiles.sync='find ~ -maxdepth 1 -type f -mtime -1 | grep -e git -e bash | grep -ve history -e extras | parallel cp {} /media/flesler/Extra/Backup/Home/dotfiles/home; cp ~/bin/*.sh /media/flesler/Extra/Backup/Home/dotfiles/home/bin'
+# Extract prompt from an image
+alias prompt="identify -format '%[parameters]'"

@@ -201,16 +201,25 @@ function mvb() {
 
 # Remove entries matching $1 from the bash history, also remove duplicates
 function forget() {
-  if [ "$1" != "" ]; then
-    file=~/.bash_history
-    before=$(cat $file | wc -l)
-    tac $file | grep -ve cmnv -e 'cm ' -e 'cd ' -e 'z ' -e 'cob ' -e 'MFD-' -e ' cp ' -e 'rr ' -e 'rrf ' \
-      | sed -r 's/ +$//g' | sed -n "/$1/!p" | awk '! seen[$0]++' | tac > /tmp/t && mvb /tmp/t $file
-    history -c
-    history -r
-    after=$(cat $file | wc -l)
-    echo "Trimmed $file, lines: $before -> $after"
+  history -a
+  # When empty, just clean up the history
+  filter=${1:-no_match}
+  if [[ *"$1"* = *"/"* ]]; then
+    echo "Slashes cannot be included"
+    return
   fi
+  file=~/.bash_history
+  before=$(cat $file | wc -l)
+  tac $file | grep -ve cmnv -e 'cm ' -e 'cd ' -e 'z ' -e 'cob ' -e 'MFD-' -e ' cp ' -e 'rr ' -e 'rrf ' -e 'ls ' -e 'chmod' \
+    | sed -r 's/ +$//g' | sed -n "/$filter/!p" | awk '! seen[$0]++' | tac > /tmp/t && mvb /tmp/t $file
+  after=$(cat $file | wc -l)
+  echo "Trimmed $file, lines: $before -> $after"
+  if [ "$after" = "0" ]; then
+    echo "Reverting..."
+    mv $file{.bkp,}
+  fi
+  history -c
+  history -r
 }
 
 # Use Node as a calculator
@@ -285,10 +294,12 @@ function watermark() {
   dest_dir="$src_dir/${3:-watermarked}"
   mkdir -p "$dest_dir"
   find "$src_dir" -maxdepth 1 -type f | while read f; do
-    img_width=$(identify -format "%w" "$f")
+    width=$(identify -format "%w" "$f")
+    height=$(identify -format "%h" "$f")
+    size=$((width < height ? width : height))
     dest="$dest_dir/$(basename """$f""")"
-    width=$((img_width/4))
-    margin=$((img_width/100))
+    width=$((size/3))
+    margin=$((size/120))
     composite -gravity $gravity -dissolve 40% -geometry "${width}x+${margin}+${margin}" ~/Pictures/Watermarks/1.png "$f" "$dest"
     echo "Watermarked $f into $dest"
   done
