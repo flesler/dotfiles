@@ -24,13 +24,9 @@ alias restart='sudo shutdown -r now'
 
 alias ns='node server'
 alias na='node app'
-alias n10='nvm run v10.16.3'
-alias n12='nvm run v12.16.1'
-alias prod='NODE_ENV=production'
 alias r='npm run -s'
 alias ni='npm install'
 alias nid='npm install -D'
-alias nrm='npm rm'
 # Convert an epoch with or without milliseconds to ISO string
 alias ts='node -pe "process.argv[1] ? new Date(+(process.argv[1]+'\''000'\'').slice(0,13)).toISOString() : Date.now()" -- '
 
@@ -73,14 +69,18 @@ alias localip='ipconfig | grep -a IPv4 | tr " " "\n" | tail -n1'
 alias online='ping 8.8.8.8'
 # Ping a domain to also check DNS resolution
 alias onlined='ping google.com'
-alias dns.blocked='tail -n99 -f /etc/dnscrypt-proxy/blocked.log | uniq -f 3'
-alias dns.queries='tail -n99 -f /etc/dnscrypt-proxy/query.log | uniq -f 6'
+alias dns.blocked='tail -n99 -f /opt/dnscrypt-proxy/blocked.log | uniq -f 3'
+alias dns.queries='tail -n99 -f /opt/dnscrypt-proxy/query.log | uniq -f 6'
 alias dns.restart='sudo systemctl restart dnscrypt-proxy.service'
-alias dns.whitelist='code /etc/dnscrypt-proxy/domain-whitelist.txt --wait && dns.restart'
-alias dns.clear='for f in /etc/dnscrypt-proxy/*.log; do echo "" | sudo tee "$f"; done'
+alias dns.whitelist='code /opt/dnscrypt-proxy/domain-whitelist.txt --wait && dns.restart'
+alias dns.clear='for f in /opt/dnscrypt-proxy/*.log; do echo "" | sudo tee "$f"; done'
 alias dns.logs='sudo journalctl -u dnscrypt-proxy.service'
 alias dns.enable='sudo cp /etc/resolv.conf.override /etc/resolv.conf'
 alias dns.disable='sudo cp /etc/resolv.conf.bkp /etc/resolv.conf'
+
+alias ollama.restart='sudo systemctl restart ollama'
+alias ollama.stop='sudo systemctl stop ollama'
+alias ollama.logs='sudo journalctl -u ollama.service'
 
 # Other
 
@@ -88,7 +88,12 @@ alias dns.disable='sudo cp /etc/resolv.conf.bkp /etc/resolv.conf'
 alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
 alias sai='sudo apt install -y'
 alias sau='sudo apt update -y && sudo apt upgrade -y'
+alias si='snap install'
+alias sr='snap refresh'
 alias reload='source ~/.bashrc'
-alias dotfiles.sync='find ~ -maxdepth 1 -type f -mtime -1 | grep -e git -e bash | grep -ve history -e extras | parallel cp {} /media/flesler/Extra/Backup/Home/dotfiles/home; cp ~/bin/*.sh /media/flesler/Extra/Backup/Home/dotfiles/home/bin'
+alias rs='rsync -vru'
+alias dotfiles.sync='find ~ -maxdepth 1 -type f -mtime -1 | grep -e git -e bash | grep -ve history -e extras | parallel cp {} ~/Backup/Home/dotfiles/home; cp ~/bin/*.sh ~/Backup/Home/dotfiles/home/bin'
 # Extract prompt from an image
 alias prompt="identify -format '%[parameters]'"
+
+alias dumpclipboard='sleep 1; xdotool type "$(xclip -o -selection clipboard)"'

@@ -6,7 +6,7 @@ if [ "$USER" = 'root' ]; then
 	USER=$(ls /home | head)
 fi
 
-# Setting this, so the repo does not need to be given on the commandline:
+# Setting this, so the repo does not need to be given on the command line:
 export BORG_REPO=ssh://pi@192.168.0.46/media/pi/External/Backup/DeLorean
 # export BORG_PASSPHRASE='...'
 
@@ -44,12 +44,17 @@ $BORG create       \
   --exclude '**/Cache' \
   --exclude '**/log' \
   --exclude '**/logs' \
+  --exclude '**/_logs' \
+  --exclude '**/.backup' \
   --exclude '**/node_modules' \
   --exclude '**/tmp' \
+  --exclude '**/.insightface' \
   --exclude '**/*Cache*/**' \
   --exclude '**/*cache*/**' \
   --exclude '*.deb' \
   --exclude '*.log' \
+  --exclude '*.cache' \
+  --exclude '*.db' \
   --exclude '/home/*/bin/*.AppImage' \
   --exclude '/home/*/bin/graphql' \
   --exclude '/home/*/.ccache' \
@@ -78,6 +83,8 @@ $BORG create       \
   --exclude '/home/*/lost+found' \
   --exclude '/home/*/snap' \
   --exclude '/home/*/miniconda3' \
+  --exclude '/home/*/google-cloud-sdk' \
+  --exclude '/home/*/cloud-code' \
   --exclude '/var/crash' \
   --exclude '/var/lock' \
   --exclude '/var/run' \
@@ -89,6 +96,7 @@ $BORG create       \
   --exclude '/var/lib/dpkg' \
   --exclude '/var/backups' \
   --exclude '/root/.config/borg' \
+  --exclude '/var/lib/app-info/icons/ubuntu-focal-universe' \
                   \
   $BORG_REPO::"$PREFIX{now:%Y-%m-%dT%H:%M:%S}" \
   /etc              \
@@ -132,10 +140,10 @@ $BORG prune              \
   --keep-monthly  1         \
 
 if [ $? -ne 0 ]; then
-  fatal 'Backup successfully but prune failed'
+  fatal 'Backup was successful but prune failed'
 fi
 
-info 'Backup and Prune finished successfully'
+info 'Backup and prune finished successfully'
 
 # Backup /etc too
 info 'Backing up /etc to keybase'

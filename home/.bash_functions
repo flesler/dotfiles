@@ -291,7 +291,8 @@ function dlyt() {
 function watermark() {
   src_dir="${1:-.}"
   gravity="${2:-south-east}"
-  dest_dir="$src_dir/${3:-watermarked}"
+  opacity="${3:-40}"
+  dest_dir="$src_dir/${4:-watermarked}"
   mkdir -p "$dest_dir"
   find "$src_dir" -maxdepth 1 -type f | while read f; do
     width=$(identify -format "%w" "$f")
@@ -300,7 +301,7 @@ function watermark() {
     dest="$dest_dir/$(basename """$f""")"
     width=$((size/3))
     margin=$((size/120))
-    composite -gravity $gravity -dissolve 40% -geometry "${width}x+${margin}+${margin}" ~/Pictures/Watermarks/1.png "$f" "$dest"
+    composite -gravity $gravity -dissolve ${opacity}% -geometry "${width}x+${margin}+${margin}" ~/Pictures/Watermarks/1.png "$f" "$dest"
     echo "Watermarked $f into $dest"
   done
 }
@@ -310,4 +311,53 @@ function git_diff() {
   from=${1:-1}
   to=${2:-$(($from - 1))}
   git diff HEAD~$from..HEAD~$to
+}
+
+# Matches files based on their Stable Diffusion prompt info
+function promptgrep() {
+  filter=$1
+  dir=${2:-.}
+  sep='======== '
+  exiftool -filename -if "\$parameters=~/$filter/i" "$dir" | grep "$sep" | sed "s/$sep//"
+}
+
+# Copies Stable Diffusion prompt info from an image to many
+function promptcopy() {
+  src=$1
+  prompt=$(identify -format '%[parameters]' $src)
+  if [ "$prompt" = "" ]; then
+    echo "No prompt found in $src"
+    return
+  fi
+  shift
+  mogrify -set parameters "$prompt" $@
+  echo "Copy prompt from $src to $@: $prompt"
+}
+
+# Copies Stable Diffusion prompt info from all sources in a dir to all the matching ones in another
+function promptcopybatch() {
+  src_dir=$1
+  dest_dir=$2
+  srcs=$(find "$src_dir" -name '*.png')
+  for src in $srcs; do
+    filter=$(echo $src | sed -r 's;.+/([^/]+)\.png;\1;')
+    dests=$(find "$dest_dir" -name "${filter}*.png")
+    if [ "$dests" != "" ]; then
+      promptcopy $src $dests
+    fi
+  done
+}
+
+# Useful shortcut
+function pluck() {
+  filter=$1
+  dir="./${filter}/"
+  mkdir -p $filter
+  if [ "$2" = "-m" ]; then
+    mv ./*${filter}*.* $dir
+    echo "Moved all to $dir"
+  else
+    cp ./*${filter}*.* $dir
+    echo "Copied all to $dir, use -m to move"
+  fi
 }

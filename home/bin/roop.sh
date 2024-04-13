@@ -7,6 +7,7 @@ open=
 gfpgan=1
 photo_filter=""
 source_filter=""
+out=/tmp/out
 
 while [ $# -gt 0 ]; do
   case $1 in
@@ -16,6 +17,7 @@ while [ $# -gt 0 ]; do
     -E) gfpgan=0 ;;
     -p) photo_filter=$2; shift ;;
     -s) source_filter=$2; shift ;;
+    -o) out=$2; shift ;;
     *) echo "Unknown option '$1'"; exit 1
   esac
   shift
@@ -33,7 +35,6 @@ rename 's/ /-/g' /tmp/{sources,photos}/*
 photos=$(ls /tmp/photos/*.* | grep -ie "$photo_filter")
 sources=$(ls /tmp/sources/*.* | grep -ie "$source_filter")
 tmp=/tmp/temp.png
-out=/tmp/out
 
 function render() {
   local photo=$1
@@ -80,7 +81,7 @@ for source in $sources; do
 
     if [ "$gfpgan" = "1" ]; then
       # The 2 steps in one go
-      render $photo $source "face_swapper face_enhancer" $out/gfpgan/$path
+      render $photo $source "face_swapper face_enhancer" $out/$path
       continue
     fi
 
