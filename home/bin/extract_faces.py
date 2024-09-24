@@ -20,6 +20,8 @@ if __name__ == '__main__':
     swapper = insightface.model_zoo.get_model('models/inswapper_128.onnx', download=True, download_zip=True)
 
     dest = sys.argv[1]
+    os.makedirs(dest, exist_ok=True)
+
     sources = sys.argv[2:]
     for source in sources:
       if not os.path.isfile(source):
@@ -32,7 +34,7 @@ if __name__ == '__main__':
           path = filename
           if i > 0:
             path = path.replace('.', '-' + str(i) + '.')
-          out = (dest + '/' + path).replace('//', '/')
+          out = os.path.join(dest, path)
           if os.path.exists(out):
             print('Face already found, skipping: ' + out)
             continue
