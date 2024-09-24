@@ -3,27 +3,33 @@
 	email = aflesler@gmail.com
 	signingkey = B56BB2FD099B63A7
 [github]
-  user = flesler
+	user = flesler
+[commit]
+	gpgsign = true
 [credential]
-  # Remember credentials when cloning over HTTPS
-  # helper = wincred
+	helper = store
+	# Remember credentials when cloning over HTTPS
+	# helper = wincred
 [alias]
 	s = status -s
 	d = diff
 	dw = diff --word-diff
-  dm = diff master..HEAD
+	dm = diff master..HEAD
+	d1 = diff HEAD^
 	a = add -A
 	cm = commit -m
 	cma = commit -am
 	cmnv = commit --no-verify -m
 	ame = commit --amend --allow-empty
 	amne = commit --amend --no-edit --allow-empty
+	cp = cherry-pick
 	co = checkout
 	com = checkout master
 	cob = checkout -b
+	bb = checkout -
+	fp = fetch -p
 	# rev = checkout --
 	rs1 = reset --soft HEAD^
-	# rh- = reset --hard HEAD^
 	rhh = reset --hard HEAD
 	rh1 = reset --hard HEAD^
 	p = push
@@ -31,8 +37,8 @@
 	pr = pull --rebase
 	st = stash
 	stu = stash save --keep-index
-  stl = stash list
-  stc = stash clear
+	stl = stash list
+	stc = stash clear
 	pop = stash pop
 	b = branch
 	bm = branch -m
@@ -42,10 +48,16 @@
 	rba = rebase --abort
 	rbi = rebase --interactive
 	rbm = rebase master
+	empty = diff-index --quiet HEAD # might need: update-index --refresh
 	head = log -n1
 	lg = log --graph --pretty=format:'%Cred%h%Creset %C(yellow)%G?%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'
-	l1 = log --no-merges --reverse -n 20 --author aflesler@gmail.com --pretty=format:'%s'
+	l1 = log --no-merges --reverse -n 20 --author aflesler@gmail.com --pretty=format:'%s' # only mine, just the commit messages
+	lc = log --format=%B -n1 # used to see a single commit (g lc f64632c)
+	lm = log --format=%s --reverse master.. # Commits not in master
+	ld = log --format=%s --reverse dev.. # Commits not in dev
+	lpd = log --format=%s --reverse origin/prod..origin/dev # Commits in dev and not in prod
 	recap = log --all --no-merges --author aflesler@gmail.com --graph --pretty=format:'%Cgreen(%cr)%Creset %s'
+  lggrep = log --pretty=format:'%H %an %s (%cr)' --abbrev-commit -S
 
 [core]
 	# Use custom `.gitignore`
@@ -73,9 +85,24 @@
 	autocorrect = 1
 [stash]
 	showPatch = true
+[tag]
+	gpgSign = true #NEW#
+[rebase]
+	autoStash = true #NEW#
+[status]
+	showStash = true #NEW#
+
+# https://git-scm.com/docs/git-config
+[safe]
+	directory = /etc
 [filter "lfs"]
-	smudge = git-lfs smudge -- %f
-	required = true
 	clean = git-lfs clean -- %f
-[commit]
-	gpgsign = true
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+[credential "https://github.com"]
+	helper =
+	helper = !/usr/bin/gh auth git-credential
+[credential "https://gist.github.com"]
+	helper =
+	helper = !/usr/bin/gh auth git-credential
