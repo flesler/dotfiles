@@ -51,12 +51,12 @@
 	empty = diff-index --quiet HEAD # might need: update-index --refresh
 	head = log -n1
 	lg = log --graph --pretty=format:'%Cred%h%Creset %C(yellow)%G?%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'
-	l1 = log --no-merges --reverse -n 20 --author aflesler@gmail.com --pretty=format:'%s' # only mine, just the commit messages
+	l1 = ! git log --no-merges --reverse -n 20 --author $(git config --get user.email) --pretty=format:'%s' # only mine, just the commit messages
 	lc = log --format=%B -n1 # used to see a single commit (g lc f64632c)
 	lm = log --format=%s --reverse master.. # Commits not in master
 	ld = log --format=%s --reverse dev.. # Commits not in dev
 	lpd = log --format=%s --reverse origin/prod..origin/dev # Commits in dev and not in prod
-	recap = log --all --no-merges --author aflesler@gmail.com --graph --pretty=format:'%Cgreen(%cr)%Creset %s'
+	recap = ! git log --all --no-merges --author $(git config --get user.email) --graph --pretty=format:'%Cgreen(%cr)%Creset %s'
   lggrep = log --pretty=format:'%H %an %s (%cr)' --abbrev-commit -S
 
 [core]
