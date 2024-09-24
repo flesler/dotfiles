@@ -161,9 +161,9 @@ function n() {
 	fi
 
 	# Can provide just the major or major.minor version
-	ver=$(nvm list | grep -Eo "$pref\.[0-9.]+")
+	ver=$(nvm list | grep -Eo "  v$pref\.[0-9.]+")
 	if [ "$ver" == "" ]; then
-		1>2 echo "No Node.js version found starting with $pref"
+		>&2 echo "No Node.js version found starting with $pref"
 	else
 		nvm use $ver
 	fi
@@ -199,9 +199,17 @@ function mvb() {
   mv $to $to.bkp && mv $@
 }
 
+# swamps 2 files
+function swap() {
+  mv $1 $1.bkp
+  mv $2 $1
+  mv $1.bkp $2
+}
+
 # Remove entries matching $1 from the bash history, also remove duplicates
 function forget() {
   history -a
+  # TODO: Support multi-argument so I don't need to always wrap in quotes?
   # When empty, just clean up the history
   filter=${1:-no_match}
   if [[ *"$1"* = *"/"* ]]; then
@@ -210,7 +218,7 @@ function forget() {
   fi
   file=~/.bash_history
   before=$(cat $file | wc -l)
-  tac $file | grep -ve cmnv -e 'cm ' -e 'cd ' -e 'z ' -e 'cob ' -e 'MFD-' -e ' cp ' -e 'rr ' -e 'rrf ' -e 'ls ' -e 'chmod' \
+  tac $file | grep -vEe 'MFD-|chmod|archived|mkdir|npm ?i|npm ?rm|apt|--help|chown|forget' -e '^([a-z])$' -e '^(z|e|t|hg|which)\b' -e '\b(cm|cd|cp|rrf?|ls|code|alias|which)\b' -e '(g|git) (cob?|cmnv|clone|bd|bm|init)\b' \
     | sed -r 's/ +$//g' | sed -n "/$filter/!p" | awk '! seen[$0]++' | tac > /tmp/t && mvb /tmp/t $file
   after=$(cat $file | wc -l)
   echo "Trimmed $file, lines: $before -> $after"
@@ -220,6 +228,8 @@ function forget() {
   fi
   history -c
   history -r
+
+  diff ~/.bash_history{.bkp,} | grep '^<' | sort -u
 }
 
 # Use Node as a calculator
@@ -271,6 +281,7 @@ function dlyt() {
   # line=$(echo "$formats" | grep -e x1080 -e x1280 | head -n1 | sed -r 's/  +/ /g')
   # line=$(echo "$formats" | grep -v "video only" | grep -e 1280x720 | head -n1 | sed -r 's/  +/ /g')
   line=$(echo "$formats" | grep -v "video only" | tail -n1 | sed -r 's/  +/ /g')
+  echo $line
   if [[ "$line" == "" ]]; then
     echo "No valid format found"
     echo "$formats"
@@ -295,14 +306,19 @@ function watermark() {
   dest_dir="$src_dir/${4:-watermarked}"
   mkdir -p "$dest_dir"
   find "$src_dir" -maxdepth 1 -type f | while read f; do
+    dest="$dest_dir/$(basename """$f""")"
+    if [ -f "$dest" ]; then
+      echo "$dest already exists"
+      continue
+    fi
     width=$(identify -format "%w" "$f")
     height=$(identify -format "%h" "$f")
     size=$((width < height ? width : height))
-    dest="$dest_dir/$(basename """$f""")"
-    width=$((size/3))
-    margin=$((size/120))
+    width=$((size*2/5))
+    margin=$((size/80))
     composite -gravity $gravity -dissolve ${opacity}% -geometry "${width}x+${margin}+${margin}" ~/Pictures/Watermarks/1.png "$f" "$dest"
     echo "Watermarked $f into $dest"
+    # promptcopy $f $dest > /dev/null
   done
 }
 
@@ -352,7 +368,7 @@ function promptcopybatch() {
 function pluck() {
   filter=$1
   dir="./${filter}/"
-  mkdir -p $filter
+  mkdir -p $dir
   if [ "$2" = "-m" ]; then
     mv ./*${filter}*.* $dir
     echo "Moved all to $dir"
@@ -360,4 +376,78 @@ function pluck() {
     cp ./*${filter}*.* $dir
     echo "Copied all to $dir, use -m to move"
   fi
+}
+
+# Syncs from the old laptop via rsync
+function bring() {
+  from=$1
+  home="/home/$USER"
+  if [[ "$from" != /* ]]; then
+    # If relative, prepending $HOME
+    from="$home/$from"
+  fi
+  def_to=$( [ -d "$from" ] && echo $(dirname "$from") || echo "$from")
+  to=${2:-$def_to}
+  if [[ "$to" != /* ]]; then
+    to="$home/$to"
+  fi
+  echo "Copying $from to $to ..."
+  rsync --verbose -a rsync://192.168.0.191:$from $to
+}
+
+# Install a package and its types
+function npmi() {
+  pkg=$1
+  version=${2:-latest}
+  npm install $pkg@$version
+  npm install -D @types/$pkg@$version
+}
+
+function npmrm() {
+  pkg=$1
+  npm rm $pkg
+  npm rm -D @types/$pkg
+}
+
+function transcribe() {
+  file=$1
+  shift
+  venv=~/Applications/whisper/venv
+  source $venv/bin/activate
+  # @see https://github.com/openai/whisper/blob/ba3f3cd54b0e5b8ce1ab3de13e32122d0d5f98ab/whisper/__init__.py#L17 for models
+  # --task {transcribe,translate} --language es --output_format {txt,srt}
+  model=medium # large, medium, small, base, tiny (with .en)
+  start=$(date +%s)
+  if [ "$1" == "--diarize" ]; then
+    shift
+    echo "Running diarization over $file with "$model" model..."
+    python ~/Applications/whisper-diarization/diarize.py --whisper-model $model -a "$file" $@
+  else
+    echo "Running transcription of $file with "$model" model..."
+    # TODO: Try FP16?
+    whisper "$file" --model $model --model_dir $venv --output_dir /tmp/ --output_format srt $@
+  fi
+  deactivate
+  echo "Transcribing took $(($(date +%s) - start))s to finish"
+}
+
+function transcribe_yt() {
+  url=$1
+  shift
+  id=$(echo $url | sed 's/^.*=//')
+  format=mp3
+  out=/tmp/$id.$format
+  tmp=${out/$id/$id.tmp}
+  if [ ! -f "$out" ]; then
+    yt-dlp -x --audio-format $format -o "$tmp" $url
+    # Handle potential interruptions
+    mv "$tmp" "$out"
+  fi
+  transcribe $out $@
+}
+
+function cursor() {
+  bin=~/Applications/cursor-*
+  $bin $@ & &>/dev/null
+  disown
 }
