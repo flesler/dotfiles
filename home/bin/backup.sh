@@ -38,10 +38,14 @@ $BORG create       \
   --compression lz4         \
   --exclude-caches        \
   --exclude '**/.DS_Store' \
+  --exclude '**/__pycache__' \
   --exclude '**/.git' \
   --exclude '**/.cache' \
   --exclude '**/cache' \
   --exclude '**/Cache' \
+  --exclude '**/CachedData' \
+  --exclude '**/History' \
+  --exclude '**/venv' \
   --exclude '**/log' \
   --exclude '**/logs' \
   --exclude '**/_logs' \
@@ -52,9 +56,19 @@ $BORG create       \
   --exclude '**/*Cache*/**' \
   --exclude '**/*cache*/**' \
   --exclude '*.deb' \
+  --exclude '*.pyc' \
   --exclude '*.log' \
   --exclude '*.cache' \
   --exclude '*.db' \
+  --exclude '*.onnx' \
+  --exclude '*.pth' \
+  --exclude '*.ckpt' \
+  --exclude '*.safetensors' \
+  --exclude '*.dat' \
+  --exclude '*.dmp' \
+  --exclude '*.meta' \
+  --exclude '*.raw' \
+  --exclude '/home/*/.continue' \
   --exclude '/home/*/bin/*.AppImage' \
   --exclude '/home/*/bin/graphql' \
   --exclude '/home/*/.ccache' \
@@ -66,16 +80,24 @@ $BORG create       \
   --exclude '/home/*/.config/joplin-desktop' \
   --exclude '/home/*/.config/VirtualBox' \
   --exclude '/home/*/.config/GraphQL*' \
+  --exclude '/home/*/.config/Cursor/User/History' \
+  --exclude '/home/*/.config/Cursor/User/workspaceStorage' \
+  --exclude '/home/*/Code/manufactured/mfd-logs' \
+  --exclude '/home/*/Code/manufactured/mfd-client/public/webviewer' \
   --exclude '/home/*/.local' \
   --exclude '/home/*/.node-gyp' \
   --exclude '/home/*/.npm/_cacache' \
   --exclude '/home/*/.nvm/versions' \
   --exclude '/home/*/.vscode' \
+  --exclude '/home/*/Code/easystroke' \
+  --exclude '/home/*/Applications' \
   --exclude '/home/*/Desktop' \
   --exclude '/home/*/Documents' \
+  --exclude '/home/*/Screencasts' \
   --exclude '/home/*/Downloads' \
   --exclude '/home/*/Music' \
   --exclude '/home/*/Pictures' \
+  --exclude '/home/*/Pictures/Screenshot*' \
   --exclude '/home/*/Projects' \
   --exclude '/home/*/Public' \
   --exclude '/home/*/Templates' \
@@ -85,6 +107,8 @@ $BORG create       \
   --exclude '/home/*/miniconda3' \
   --exclude '/home/*/google-cloud-sdk' \
   --exclude '/home/*/cloud-code' \
+  --exclude '/home/*/pinokio' \
+  --exclude '/home/*/SteamLibrary/steamapps/compatdata' \
   --exclude '/var/crash' \
   --exclude '/var/lock' \
   --exclude '/var/run' \
@@ -146,9 +170,9 @@ fi
 info 'Backup and prune finished successfully'
 
 # Backup /etc too
-info 'Backing up /etc to keybase'
-cd /etc
-sudo git add . && sudo git commit -m 'Updated' && git push origin master
-cd - &> /dev/null
+# info 'Backing up /etc to keybase'
+# cd /etc
+# sudo git add . && sudo git commit -m 'Updated' && git push origin master
+# cd - &> /dev/null
 
 exit 0
