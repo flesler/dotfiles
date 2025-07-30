@@ -2,6 +2,10 @@
 # Auto-setup for AI agent shell environment
 if [[ "$PS1" != *🤖* ]]; then
   unset HISTFILE
+  
+  # SECURITY: Set 30-second sudo timeout for AI shell
+  alias sudo='sudo -T 30'
+  
   export NVM_DIR="$HOME/.nvm"
   [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
   command -v nvm >/dev/null 2>&1 && nvm use

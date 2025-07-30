@@ -15,11 +15,13 @@ alias rrf='rr -f'
 alias mkp='mkdir -p'
 alias path.list='echo "$PATH" | tr ":" "\n"'
 alias t='tldr --theme ocean'
+alias restart='sudo shutdown -r now'
+
+# Find
 alias find.dir='find . -type d -iname'
 alias find.file='find . -type f -iname'
 alias find.inside='grep --exclude-dir={node_modules,.git} -Irlw . -e'
 alias find.gzip='find . -iname '''*.gz''' | sort | xargs gzip -dc | grep -Eie'
-alias restart='sudo shutdown -r now'
 
 # FD
 alias fd=fdfind
@@ -88,6 +90,8 @@ alias localip='hostname -I | awk '\''{print $1}'\'''
 alias online='ping 8.8.8.8'
 # Ping a domain to also check DNS resolution
 alias onlined='ping google.com'
+
+# DNS
 alias dns.blocked="tail -n99 /opt/dnscrypt-proxy/blocked.log | awk '{print \$1,\$2,\$4,\$5}' | sort -r | awk '!a[\$3]++' | sort"
 alias dns.restart='sudo systemctl restart dnscrypt-proxy.service'
 alias dns.whitelist='code /opt/dnscrypt-proxy/domain-whitelist.txt --wait && dns.restart'
@@ -98,34 +102,39 @@ alias dns.logs='sudo journalctl -u dnscrypt-proxy.service'
 alias dns.enable='sudo cp /etc/resolv.conf.override /etc/resolv.conf'
 alias dns.disable='sudo cp /etc/resolv.conf.bkp /etc/resolv.conf'
 alias dns.pihole='sudo cp /etc/resolv.conf.pihole /etc/resolv.conf'
-# DNS
+
+# Wifi
 alias wifi.on='sudo rfkill unblock wifi && sudo ip link set wlan0 up'
 alias wifi.off='sudo ip link set wlan0 down'
+
 # Ollama
 alias ollama.restart='sudo systemctl restart ollama'
 alias ollama.stop='sudo systemctl stop ollama'
 alias ollama.logs='sudo journalctl -u ollama.service'
 alias ollama.update='curl -fsSL https://ollama.com/install.sh | sudo sh && ollama --version'
+
 # History (history.forget is in .bash_functions)
 alias history.restore='cp ~/.bash_history.bkp ~/.bash_history'
 alias history.grep='history | grep'
 alias history.forget='forget'
 alias history.edit='code ~/.bash_history'
+
 # Keyboard
 alias keyboard.keys="xev | grep -A2 --line-buffered '^KeyRelease' | sed -n '/keycode /s/^.*keycode \([0-9]*\).* (.*, \(.*\)).*$/\1 \2/p'"
 alias keyboard.dump='sleep 1; xdotool type "$(xclip -o -selection clipboard)"'
-# Other
 
 # Add an "alert" alias for long running commands. Use like so: sleep 10; alert
 alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
 alias reload='source ~/.bashrc'
-alias dotfiles.sync='find ~ -maxdepth 1 -type f -mtime -1 | grep -e git -e bash | grep -ve history -e extras | parallel cp {} ~/Backup/Home/dotfiles/home; cp ~/bin/*.sh ~/Backup/Home/dotfiles/home/bin'
+alias dotfiles.sync='find ~ -maxdepth 1 -type f -mtime -1 | grep -e git -e bash | grep -ve history -e extras | parallel cp {} ~/Code/dotfiles/home; cp ~/bin/*.sh ~/Code/dotfiles/home/bin'
 # Extract prompt from an image
 alias prompt="identify -format '%[parameters]'"
 
+# Snap
 alias snap.i='snap install'
 alias snap.r='snap refresh'
 
+# Apt
 alias apt.i='sudo apt update -y && sudo apt install -y'
 alias apt.u='sudo apt update -y && sudo apt upgrade -y'
 
@@ -137,7 +146,11 @@ alias rs.dry='rs.cp --dry-run'
 alias rs.mv='rs --remove-source-files'
 
 # For the RaspberryPI
-alias pi.home='rs ~/.{bash_{aliases,functions,profile,options,exports,prompt,login,logout,extras},profile,gitconfig,npmrc,bashrc} rsync://pi.local/home'
+alias pi.home='rs ~/.{bash_{aliases,functions,profile,options,exports,prompt,login,logout,extras,cursor},profile,gitconfig,npmrc,bashrc} rsync://pi.local/home'
 
 # GPU
 alias gpu.usage='nvidia-smi --query-compute-apps=pid,process_name,used_memory --format=csv'
+
+# Cargo
+alias cargo.i='CARGO_BUILD_RUSTFLAGS="-C target-cpu=native" cargo install --locked'
+alias cargo.u='cargo uninstall'
