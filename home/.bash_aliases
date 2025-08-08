@@ -16,6 +16,7 @@ alias mkp='mkdir -p'
 alias path.list='echo "$PATH" | tr ":" "\n"'
 alias t='tldr --theme ocean'
 alias restart='sudo shutdown -r now'
+alias cursor="~/Applications/cursor.AppImage"
 
 # Find
 alias find.dir='find . -type d -iname'
@@ -125,8 +126,11 @@ alias keyboard.dump='sleep 1; xdotool type "$(xclip -o -selection clipboard)"'
 
 # Add an "alert" alias for long running commands. Use like so: sleep 10; alert
 alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
-alias reload='source ~/.bashrc'
-alias dotfiles.sync='find ~ -maxdepth 1 -type f -mtime -1 | grep -e git -e bash | grep -ve history -e extras | parallel cp {} ~/Code/dotfiles/home; cp ~/bin/*.sh ~/Code/dotfiles/home/bin'
+
+# Dotfiles
+alias dotfiles.reload='source ~/.bashrc'
+alias dotfiles.sync='find ~ -maxdepth 1 -type f -mtime -1 | grep -e git -e bash | grep -ve history -e extras | parallel cp {} ~/Code/dotfiles/home; cp ~/bin/*.sh ~/Code/dotfiles/home/bin; mkdir -p ~/Code/dotfiles/home/.config/Cursor/User && cp ~/.config/Cursor/User/{settings,keybindings}.json ~/Code/dotfiles/home/.config/Cursor/User'
+
 # Extract prompt from an image
 alias prompt="identify -format '%[parameters]'"
 

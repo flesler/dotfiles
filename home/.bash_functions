@@ -58,10 +58,10 @@ function h() {
 
 # Edits one of the dotfiles and then re-sources it
 # USAGE:
-# $ rc       # edit .bashrc
-# $ rc alias # edit .bash_aliases
-# $ rc input # edit .inputrc
-function rc() {
+# $ dotfiles.edit       # edit .bashrc
+# $ dotfiles.edit alias # edit .bash_aliases
+# $ dotfiles.edit input # edit .inputrc
+function dotfiles.edit() {
   local name=${1:-bash}
   local editor=${EDITOR:-vi}
   for file in "$name" ".$name" ".${name}rc" ".bash_$name" ".bash_${name}s" ".bash_${name}es"; do
@@ -217,13 +217,6 @@ function calc() {
   local code="${*//x/*}"  # Replace x with *
   code="${code//^/**}"    # Replace ^ with **
   node -pe "with(Math) { $code }"
-}
-
-# Re run the last line with sudo (same as sudo !!)
-function sd() {
-  local line="sudo $(tail -n1 ~/.bash_history)"
-  echo $line
-  $line
 }
 
 # Archive file and/or dirs with tar+gzip
@@ -506,6 +499,26 @@ function pi() {
     ssh pi@pi.local
     return 1  # Prevents `&&` command from running on the host
   fi
+}
+
+# Run commands on the Pi via SSH and return output (non-interactive)
+function pi.ssh() {
+  if [[ "$USER" == "pi" ]]; then
+    # Already on the Pi, just run the command
+    "$@"
+  else
+    # Connect to Pi and run the command
+    ssh pi@pi.local "$@"
+  fi
+}
+
+# Copy a file to the Pi
+# USAGE:
+# $ pi.cp ~/Downloads/file.txt /home/pi/Downloads/
+function pi.cp() {
+  local from=$1
+  local to=${2:-$from}
+  scp $from pi@pi.local:$to
 }
 
 function dns.temp() {

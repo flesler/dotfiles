@@ -165,6 +165,7 @@ $BORG create       \
   --exclude '/home/*/pinokio' \
   --exclude '/home/*/.docker' \
   --exclude '/home/*/.kube' \
+  --exclude '/home/*/.eclipse' \
   --exclude '/home/*/SteamLibrary/steamapps/compatdata' \
   --exclude '/var/crash' \
   --exclude '/var/lock' \
@@ -236,11 +237,5 @@ else
 fi
 
 info 'Backup and prune finished successfully'
-
-# Backup /etc too
-# info 'Backing up /etc to keybase'
-# cd /etc
-# sudo git add . && sudo git commit -m 'Updated' && git push origin master
-# cd - &> /dev/null
 
 exit 0
